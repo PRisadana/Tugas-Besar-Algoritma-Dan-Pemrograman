@@ -188,7 +188,7 @@ void pilih_golongan(){
     printf("\n\t| (1) Rumah Tangga                                             |");
     printf("\n\t| (2) Bisnis                                                   |");
     printf("\n\t| (3) Industri                                                 |");
-    printf("\n\t| (4) Fasilitas publik (contoh : lampu penerangan jalan umum)  |");
+    printf("\n\t| (4) Fasilitas publik                                         |");
     printf("\n\t================================================================");
     printf("\n\t| Masukkan pilihan : ");
     while(scanf("%d", &golongan)==0 || golongan<1 || golongan >4){
@@ -209,8 +209,7 @@ void pilih_golongan(){
         industri();
     }else if(golongan==4){
         fasilitas_publik();
-    }
-    
+    }   
     
 }
 
@@ -323,7 +322,7 @@ void rumah_tangga(){
     float rumus_denda;
     float rumus_rekening_total;
     // 900 VA
-    if(pilih_dayalistrik==1 && tanggal <= 20){ // Tidak Terkena Denda
+    if(pilih_dayalistrik==1 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         rumus_denda = 0;
         if (pemakaian<=36){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (1352);
@@ -817,7 +816,7 @@ void bisnis(){
     float ppj;
 
     // 6600 VA - 200.000 VA
-    if (pilih_dayalistrik==1 && tanggal <= 20){ // Tidak Terkena Denda
+    if (pilih_dayalistrik==1 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         if (pemakaian1<=264){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (1444.70);
         }else{
@@ -1198,7 +1197,7 @@ void industri(){
     float ppj;
 
     // diatas 200 kVA
-    if (pilih_dayalistrik==1 && tanggal <= 20){ // Tidak Terkena Denda
+    if (pilih_dayalistrik==1 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         rumus_denda = 0;
         rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh) ;
         ppj = (rumus_lwbp + rumus_wbp) * 0.03;
@@ -1570,7 +1569,7 @@ void fasilitas_publik(){
     float ppj;
 
     // 6600 VA - 200.000 VA
-    if (pilih_dayalistrik==1 && tanggal <= 20){ // Tidak Terkena Denda
+    if (pilih_dayalistrik==1 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         if (pemakaian1<=264){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (1444.70);
         }else{
