@@ -7,7 +7,7 @@ void bisnis();
 void industri();
 void fasilitas_publik();
 
-//LWBP = Luar Waktu Beban Puncak (22.00 s.d. 18.00)
+//LWBP  = Luar Waktu Beban Puncak (22.00 s.d. 18.00)
 //WBP = Waktu Beban Puncak (18.00 s.d. 22.00)
 
 void close(){
