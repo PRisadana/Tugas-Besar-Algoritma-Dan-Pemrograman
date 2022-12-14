@@ -1,13 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <time.h>
 
 void rumah_tangga();
 void bisnis();
 void industri();
 void fasilitas_publik();
+void cetakakunregister(char username_register[50], char password_register[8]);
 
-//LWBP  = Luar Waktu Beban Puncak (22.00 s.d. 18.00)
+//LWBP = Luar Waktu Beban Puncak (22.00 s.d. 18.00)
 //WBP = Waktu Beban Puncak (18.00 s.d. 22.00)
 
 void close(){
@@ -18,167 +20,130 @@ void close(){
     system("clear");
 }
 
-// float rekening_minimum_1(float dayaterpasang, float pemakaian){
-//     float rumus;
-//     if(dayaterpasang==900){
-//         rumus = 40 * (dayaterpasang/1000) * (1352*pemakaian);
-//     }else if(dayaterpasang==1300){
-//         //biaya_pemakaian = (1444.70*pemakaian);
-//         rumus = 40 * (dayaterpasang/1000) * (1444.70*pemakaian);
-//     }else if(dayaterpasang==2200){
-//         //biaya_pemakaian = (1444.70*pemakaian);
-//         rumus = 40 * (dayaterpasang/1000) * (1444.70*pemakaian);
-//     }else if(dayaterpasang==5500 || dayaterpasang==6600){
-//         //biaya_pemakaian = (1699.53*pemakaian);
-//         rumus = 40 * (dayaterpasang/1000) * (1699.53*pemakaian);
-//     }else if( dayaterpasang==6600){
-//         //biaya_pemakaian = (1699.53*pemakaian);
-//         rumus = 40 * (dayaterpasang/1000) * (1699.53*pemakaian);
-//     }
-    
-//     return rumus;
-// }
+void admin_login(){
 
-// float rekening_minimum_2(float dayaterpasang, float biayapemakaian2){
-//     float rumus = 40 * dayaterpasang/1000 * biayapemakaian2;
-//     return rumus;
-// }
+    char username_register[50];
+    char password_register[8];
+    char username_login[50];
+    char password_login[8];
+    int pilih;
+    printf("\n\t================================================================");
+    printf("\n\t|                       Admin Login Account                    |");
+    printf("\n\t================================================================");
+    printf("\n\t| (1) Register                                                 |");
+    printf("\n\t| (2) Login                                                    |");
+    printf("\n\t================================================================");
+    printf("\n\t| Masukkan pilihan : ");
+    while(scanf("%d", &pilih)==0 || pilih<1 || pilih >2){
+        printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
+        printf("\n\tInputan harus berupa angka");
+        printf("\n\t================================================================");
+        printf("\n\t| Masukkan pilihan : ");
+        while( pilih = getchar() != '\n');
+    }
 
-// float rekening_minimum_3(float dayaterpasang, float biayapemakaian3){
-//     float rumus = 40 * dayaterpasang/1000 * biayapemakaian3;
-//     return rumus;
-// }
+    close();
 
-// float denda (float dayaterpasang){
+    if(pilih==1){
+        printf("\n\t================================================================");
+        printf("\n\t|                       Register Account                       |");
+        printf("\n\t================================================================");
+        printf("\n\tMasukkan username : ");
+        fgets(username_register, sizeof(username_register), stdin);
+        printf("\n\tMasukkan password : ");
+        fgets(password_register, sizeof(password_register), stdin);
+        printf("\n\t================================================================");
+        printf("\n\t|                        Register Succes                       |");
+        printf("\n\t================================================================");
+        cetakakunregister(username_register, password_register);
+        close();
+        printf("\n\t================================================================");
+        printf("\n\t|                         Login Account                        |");
+        printf("\n\t================================================================");
+        printf("\n\tMasukkan username : ");
+        fgets(username_login, sizeof(username_login), stdin);
+        printf("\n\tMasukkan password : ");
+        fgets(password_login, sizeof(password_login), stdin);
+        if( strcmp(username_register, username_login)==0 && strcmp(password_register, password_login)==0){ // strcmp akan mennghasilkan nilai 0 jika yang dibandingkan sama
+            printf("\n\t================================================================");
+            printf("\n\t|                         Login Succes                         |");
+            printf("\n\t----------------------------------------------------------------");
+            printf("\n\tSelamat datang %s ", username_login);
+            printf("\n\t----------------------------------------------------------------");
+            close();
+        }else{
+            printf("\n\t================================================================");
+            printf("\n\t|                          PERINGATAN                          |");
+            printf("\n\t----------------------------------------------------------------");
+            printf("\n\t| Username atau password yang anda masukkan salah !            |");
+            printf("\n\t| Silahkan login ulang                                         |");
+            printf("\n\t----------------------------------------------------------------");
+            close();
+        }
+    }else if (pilih==2){
+        //deklarasi variabel yang akan digunakan untuk menyimpan nilai yang diambil dari file txt
+        char username_login_txt[50];
+        char password_login_txt[8];
+        //Membaca file txt
+        FILE *fptr;
 
-//     int tanggal;
-//     int bulan;
-//     int tahun;
+        if ((fptr = fopen("akunregister.txt","r")) == NULL){
+        printf("Error: File tidak ada!");
+        // Tutup program karena file gak ada.
+        exit(1);
+        }
 
-//     // Membuat time realtime
-//     time_t t = time(NULL);
-//     struct tm tm = *localtime(&t);
+        fgets(username_register, sizeof(username_register), stdin);
+        fgets(password_register, sizeof(password_register), stdin);
 
-//     printf("\n\t================================================================");
-//     printf("\n\t|               Silahkan Masukkan Tanggal Tagihan              |");
-//     printf("\n\t================================================================");
-//     printf("\n\tMasukkan tanggal tagihan : ");
-//     while(scanf("%d", &tanggal)==0 || tanggal<1 || tanggal >31 || tanggal==tm.tm_mday){
-//         printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
-//         printf("\n\tInputan harus berupa angka");
-//         printf("\n\t================================================================");
-//         printf("\n\tMasukkan tanggal tagihan : ");
-//         while(tanggal=getchar() != '\n');
-//     }
-//     printf("\n\tMasukkan bulan tagihan : ");
-//     while(scanf("%d", &bulan)==0 || bulan < 1 || bulan > 12 || bulan==tm.tm_mon + 1){
-//         printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
-//         printf("\n\tInputan harus berupa angka");
-//         printf("\n\t================================================================");
-//         printf("\n\tMasukkan bulan tagihan : ");
-//         while( bulan=getchar() != '\n');
-//     }
-//     printf("\n\tMasukkan tahun tagihan : ");
-//     while(scanf("%d", &tahun)==0){
-//         printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
-//         printf("\n\tInputan harus berupa angka");
-//         printf("\n\t================================================================");
-//         printf("\n\tMasukkan tahun tagihan : ");
-//         while( tahun = getchar()!= '\n');
-//     }
+        printf("\n\t================================================================");
+        printf("\n\t|                         Login Account                        |");
+        printf("\n\t================================================================");
+        printf("\n\tMasukkan username : ");
+        fgets(username_login, sizeof(username_login), stdin);
+        printf("\n\tMasukkan password : ");
+        fgets(password_login, sizeof(password_login), stdin);
+        if( strcmp(username_login, username_register)==0 && strcmp(password_login, password_register)==0){ // strcmp akan mennghasilkan nilai 0 jika yang dibandingkan sama
+            printf("\n\t================================================================");
+            printf("\n\t|                         Login Succes                         |");
+            printf("\n\t----------------------------------------------------------------");
+            printf("\n\t| Selamat datang %s                                            |", username_login);
+            printf("\n\t----------------------------------------------------------------");
+        }else{
+            printf("\n\t================================================================");
+            printf("\n\t|                          PERINGATAN                          |");
+            printf("\n\t----------------------------------------------------------------");
+            printf("\n\t| Username atau password yang anda masukkan salah !            |");
+            printf("\n\t| Silahkan login ulang                                         |");
+            printf("\n\t----------------------------------------------------------------");
+            close();
+        }
+        close();
+    }
+}
 
-//     float rumus_denda;
-//     if(tanggal <= 20){
-//         rumus_denda = 0;
-//     }else if(dayaterpasang=900 && tanggal > 20 && tanggal <=31 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){
-//         rumus_denda = 3000;
-//     }else if(dayaterpasang=900 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1900){
-//         rumus_denda = 3000*2;
-//     }else if(dayaterpasang=900 &&  bulan == tm.tm_mon -1 && tahun == tm.tm_year + 1900){
-//         rumus_denda = 3000*3;
-//     }else if(dayaterpasang=900 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1899){
-//         rumus_denda = 3000*2;
-//     }else if(dayaterpasang=900 &&  bulan == tm.tm_mon -1 && tahun == tm.tm_year + 1899){
-//         rumus_denda = 3000*3;
-//     }else if (dayaterpasang=1300){
-//         rumus_denda = 5000 / bulan;
-//     }else if (dayaterpasang=2200){
-//         rumus_denda = 10000 / bulan;
-//     }else if (dayaterpasang>=3500 && dayaterpasang<=5500){
-//         rumus_denda = 50000 / bulan;
-//     // }else if (dayaterpasang>=6600 && dayaterpasang<=14000){
-//     //     rumus_denda = 0.3 * tariff_adjusment / bulan;
-//     // }else if (dayaterpasang>14000){
-//     //     rumus_denda = 0.3 * tariff_adjusment / bulan;
-//     // }else if (dayaterpasang>=6600 && dayaterpasang<=14000 && tariff_adjusment <= (2500000)){
-//     //     rumus_denda = 75000 / bulan;
-//     // }else if (dayaterpasang>14000 && tariff_adjusment <= (3333334)){
-//     //     rumus_denda = 100000 / bulan;
-//     }
+void cetakakunregister(char username_register[50], char password_register[50]){
+    //menulis file ke txt
+     //membuat pointer
+    FILE *fptr;
 
-//     close();
-//     return rumus_denda;
+    //membuka file
+    fptr = fopen("akunregister.txt", "a");
 
-// }
+    if (fptr==NULL){
+        printf ("\n\tFile tidak ditemukan");
+        exit(0);
+    }
 
-// float biayaketerlambatan(float tanggal){
-//     int haritelat;
-//     int denda;
-//     if (tanggal >= 1 && tanggal <=20){
-//         denda = 0;
-//     }else if (tanggal >15 && haritelat <=11){
-//         denda = 
-//     }
-// }
+        fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        fprintf(fptr, "\n\t| Username : %s ", username_register);
+        fprintf(fptr, "\n\t| Password : %s ", password_register);
+        fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
 
-// float tariff_adjusment(){
-//     float pemakaianbulanlalu;
-//     float pemakaianbulanini;
-//     float pemakaian;
-//     int rekening[20];
-//     char nama[30];
-//     char alamat[128];
+        fclose(fptr);//tutup file
 
-//     printf("\n\tMasukkan nama anda : ");
-//     scanf("%[^\n]s", &nama);
-
-//     printf("\n\tMasukkan NO REK ID Pelanggan : ");
-//     while(scanf("%d", &rekening)==0){
-//         printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
-//         printf("\n\tInputan harus berupa angka");
-//         printf("\n\t================================================================");
-//         printf("\n\tMasukkan NO REK ID Pelanggan : ");
-//         while(getchar()=rekening != '\n');
-//     }
-
-//     printf("\n\tMasukkan alamat anda : ");
-//     scanf("%[^\n]s", &alamat);
-
-//     printf("\n\tMasukkan pemakaian bulan sebelumnya (kWh) : ");
-//     while(scanf("%f", &pemakaianbulanlalu)==0){
-//         printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
-//         printf("\n\tInputan harus berupa angka");
-//         printf("\n\t================================================================");
-//         printf("\n\tMasukkan pemakaian bulan ini (kwh) :");
-//         while(getchar()=pemakaianbulanlalu != '\n');
-//     }
-
-//     printf("\n\tMasukkan pemakaian bulan ini (kwh) :");
-//     while(scanf("%f", &pemakaianbulanini)==0 || pemakaianbulanini<pemakaianbulanlalu){
-//         printf("\n\tInputan anda salah, silahkan ulangi");
-//         printf("\n\tPemakaian bulan ini < pemakaian bulan lalu (kWh)");
-//         printf("\n\t================================================================");
-//         printf("\n\tMasukkan pemakaian bulan ini (kwh) :");
-//         while(getchar()=pemakaianbulanlalu != '\n');
-//     }
-
-//     pemakaian = pemakaianbulanini - pemakaianbulanlalu;
-
-//     close2();
-
-
-    
-// } 
+        printf("\n\tAkun Telah Berhasil Disimpan\n");
+}
 
 void pilih_golongan(){
     int golongan;
@@ -209,8 +174,8 @@ void pilih_golongan(){
         industri();
     }else if(golongan==4){
         fasilitas_publik();
-    }   
-    
+    }
+
 }
 
 void rumah_tangga(){
@@ -286,10 +251,10 @@ void rumah_tangga(){
     }
 
     pemakaian = pemakaianbulanini - pemakaianbulanlalu;
-    
-    //pilih_dayalistrik = pilih_dayalistrik-1;
+
+    //pilih_dayalistrik = pilih_dayalistrik-1; 
     close();
-   
+
     printf("\n\t================================================================");
     printf("\n\t|               Silahkan Masukkan Tanggal Tagihan              |");
     printf("\n\t================================================================");
@@ -371,7 +336,7 @@ void rumah_tangga(){
         rumus_denda = 3000*3;
         rumus_rekening_total = rumus_rekening + rumus_denda;
     // 1.300 VA
-    }else if (pilih_dayalistrik==2 && tanggal <= 20){ // Tidak Terkena Denda
+    }else if (pilih_dayalistrik==2 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         rumus_denda = 0;
         if (pemakaian<=52){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (1444.70);
@@ -421,7 +386,7 @@ void rumah_tangga(){
         rumus_rekening_total = rumus_rekening + rumus_denda;
     }
     // 2.200 VA
-    else if (pilih_dayalistrik==3 && tanggal <= 20){ // Tidak Terkena Denda
+    else if (pilih_dayalistrik==3 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         rumus_denda = 0;
         if (pemakaian<=88){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (1444.70);
@@ -453,7 +418,7 @@ void rumah_tangga(){
         }
         rumus_denda = 10000 * 3;
         rumus_rekening_total = rumus_rekening + rumus_denda;
-    }else if(pilih_dayalistrik==3 && dayalistrik_2[(int)pilih_dayalistrik-1]==2200 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1899){  // Terkena Denda Biaya Keterlambatan 2, di tahun yang beda
+    }else if(pilih_dayalistrik==3 && dayalistrik_2[(int)pilih_dayalistrik-1]==2200 && bulan == tm.tm_mon  && tahun == tm.tm_year + 1899){  // Terkena Denda Biaya Keterlambatan 2, di tahun yang beda
         if (pemakaian<=88){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (1444.70);
         }else{
@@ -471,7 +436,7 @@ void rumah_tangga(){
         rumus_rekening_total = rumus_rekening + rumus_denda;
     }
     // 3.500 VA - 5.500 VA
-    else if (pilih_dayalistrik==4 && tanggal <= 20){ // Tidak Terkena Denda
+    else if (pilih_dayalistrik==4 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
        rumus_denda = 0;
         if (pemakaian<=220){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (1699.53);
@@ -521,7 +486,7 @@ void rumah_tangga(){
         rumus_rekening_total = rumus_rekening + rumus_denda;
     }
     // 6600 Ke Atas
-    else if (pilih_dayalistrik==5 && tanggal <= 20){ // Tidak Terkena Denda
+    else if (pilih_dayalistrik==5 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         if (pemakaian<=264){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (1699.53);
         }else{
@@ -607,11 +572,11 @@ void rumah_tangga(){
     printf("\n\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
     printf("\n\tTanggal pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tSumber Daya Listrik Digunakan = %s", dayalistrik[(int)pilih_dayalistrik-1]);
-    printf("\n\tPemakaian anda bulan ini      = %.2f (kWh)", pemakaian); 
+    printf("\n\tPemakaian anda bulan ini      = %.2f (kWh)", pemakaian);
     printf("\n\tBiaya denda                   = Rp.%.2f", rumus_denda);
-    printf("\n\tBiaya pemakaian listrik(kWh)  = Rp. %.2f", rumus_rekening);
+    printf("\n\tBiaya pemakaian listrik(kWh)  = Rp.%.2f", rumus_rekening);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    printf("\n\tjumlah tagihan anda           = Rp %.2f", rumus_rekening_total);
+    printf("\n\tjumlah tagihan anda           = Rp.%.2f", rumus_rekening_total);
 }
 
 void bisnis(){
@@ -781,7 +746,7 @@ void bisnis(){
     }
 
     close();
-   
+
     printf("\n\t================================================================");
     printf("\n\t|               Silahkan Masukkan Tanggal Tagihan              |");
     printf("\n\t================================================================");
@@ -891,8 +856,8 @@ void bisnis(){
          ppj = 0;
         rumus_rekening_total = rumus_rekening + rumus_denda;
     }
-    // di atas 200.000 VA 
-    else if (pilih_dayalistrik==2 && tanggal <= 20){ // Tidak Terkena Denda
+    // di atas 200.000 VA
+    else if (pilih_dayalistrik==2 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         rumus_denda = 0;
         rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh) ;
         ppj = (rumus_lwbp + rumus_wbp) * 0.03;
@@ -912,7 +877,7 @@ void bisnis(){
             rumus_denda = 100000;
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
-    }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 2, di tahun yang sama
+    }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 && bulan == tm.tm_mon  && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 2, di tahun yang sama
         rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
         ppj = (rumus_lwbp + rumus_wbp) * 0.03;
         if (pemakaian2 <= 8000){
@@ -978,19 +943,19 @@ void bisnis(){
     printf("\n\tTanggal pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tSumber Daya Listrik Digunakan           = %s", dayalistrik[(int)pilih_dayalistrik-1]);
     if(pilih_dayalistrik==1){
-        printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian1); 
+        printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian1);
     }else if(pilih_dayalistrik==2){
-        printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian2); 
+        printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian2);
     }
     printf("\n\tBiaya pemakaian daya reaktif (kVArh)    = Rp.%.1f ", rumus_kVArh);
     printf("\n\tFaktor perbandingan harga WBP dan LWBP  = Rp.%.2f ", k/10);
-    printf("\n\tBiaya Beban WBP                         = Rp.%.2f ", rumus_wbp); 
-    printf("\n\tBiaya Beban LWBP                        = Rp.%.2f ", rumus_lwbp); 
+    printf("\n\tBiaya Beban WBP                         = Rp.%.2f ", rumus_wbp);
+    printf("\n\tBiaya Beban LWBP                        = Rp.%.2f ", rumus_lwbp);
     printf("\n\tBiaya denda                             = Rp.%.2f", rumus_denda);
     printf("\n\tBiaya Pajak Penerangan Jalan            = Rp.%.2f", ppj);
-    printf("\n\tBiaya pemakaian listrik(kWh)            = Rp. %.2f", rumus_rekening);
+    printf("\n\tBiaya pemakaian listrik(kWh)            = Rp.%.2f", rumus_rekening);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    printf("\n\tjumlah tagihan anda                     = Rp %.2f", rumus_rekening_total);
+    printf("\n\tjumlah tagihan anda                     = Rp.%.2f", rumus_rekening_total);
 }
 
 void industri(){
@@ -1162,7 +1127,7 @@ void industri(){
     }
 
     close();
-   
+
     printf("\n\t================================================================");
     printf("\n\t|               Silahkan Masukkan Tanggal Tagihan              |");
     printf("\n\t================================================================");
@@ -1267,7 +1232,7 @@ void industri(){
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }
     // 30.000 kVA ke atas
-    else if (pilih_dayalistrik==2 && tanggal <= 20){ // Tidak Terkena Denda
+    else if (pilih_dayalistrik==2 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * 0.03) + (rumus_kVArh) ;
         ppj = (rumus_beban_wbp_dan_lwbp) * 0.03;
         if (pemakaian <= 1200000){
@@ -1353,17 +1318,17 @@ void industri(){
     printf("\n\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
     printf("\n\tTanggal pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tSumber Daya Listrik Digunakan           = %s", dayalistrik[(int)pilih_dayalistrik-1]);
-    printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian); 
+    printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian);
     printf("\n\tBiaya pemakaian daya reaktif (kVArh)    = Rp.%.1f ", rumus_kVArh);
     printf("\n\tFaktor perbandingan harga WBP dan LWBP  = Rp.%.2f ", k/10);
-    printf("\n\tBiaya Beban WBP                         = Rp.%.2f ", rumus_wbp); 
-    printf("\n\tBiaya Beban LWBP                        = Rp.%.2f ", rumus_lwbp); 
-    printf("\n\tBiaya Beban WBP Dan LWBP                = Rp.%.2f ", rumus_beban_wbp_dan_lwbp); 
+    printf("\n\tBiaya Beban WBP                         = Rp.%.2f ", rumus_wbp);
+    printf("\n\tBiaya Beban LWBP                        = Rp.%.2f ", rumus_lwbp);
+    printf("\n\tBiaya Beban WBP Dan LWBP                = Rp.%.2f ", rumus_beban_wbp_dan_lwbp);
     printf("\n\tBiaya Pajak Penerangan Jalan            = Rp.%.2f", ppj);
     printf("\n\tBiaya denda                             = Rp.%.2f", rumus_denda);
-    printf("\n\tBiaya pemakaian listrik(kWh)            = Rp. %.2f", rumus_rekening);
+    printf("\n\tBiaya pemakaian listrik(kWh)            = Rp.%.2f", rumus_rekening);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    printf("\n\tjumlah tagihan anda                     = Rp %.2f", rumus_rekening_total);
+    printf("\n\tjumlah tagihan anda                     = Rp.%.2f", rumus_rekening_total);
 }
 
 void fasilitas_publik(){
@@ -1534,7 +1499,7 @@ void fasilitas_publik(){
     }
 
     close();
-   
+
     printf("\n\t================================================================");
     printf("\n\t|               Silahkan Masukkan Tanggal Tagihan              |");
     printf("\n\t================================================================");
@@ -1644,8 +1609,8 @@ void fasilitas_publik(){
          ppj = 0;
         rumus_rekening_total = rumus_rekening + rumus_denda;
     }
-    // di atas 200.000 VA 
-    else if (pilih_dayalistrik==2 && tanggal <= 20){ // Tidak Terkena Denda
+    // di atas 200.000 VA
+    else if (pilih_dayalistrik==2 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         rumus_denda = 0;
         rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh) ;
         ppj = (rumus_lwbp + rumus_wbp) * 0.03;
@@ -1738,24 +1703,25 @@ void fasilitas_publik(){
     printf("\n\tTanggal pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tSumber Daya Listrik Digunakan           = %s", dayalistrik[(int)pilih_dayalistrik-1]);
     if(pilih_dayalistrik==1){
-        printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian1); 
+        printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian1);
     }else if(pilih_dayalistrik==2){
-        printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian2); 
+        printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian2);
     }else if(pilih_dayalistrik==3){
-        printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian1); 
+        printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian1);
     }
     printf("\n\tBiaya pemakaian daya reaktif (kVArh)    = Rp.%.1f ", rumus_kVArh);
     printf("\n\tFaktor perbandingan harga WBP dan LWBP  = Rp.%.2f ", k/10);
-    printf("\n\tBiaya Beban WBP                         = Rp.%.2f ", rumus_wbp); 
-    printf("\n\tBiaya Beban LWBP                        = Rp.%.2f ", rumus_lwbp); 
+    printf("\n\tBiaya Beban WBP                         = Rp.%.2f ", rumus_wbp);
+    printf("\n\tBiaya Beban LWBP                        = Rp.%.2f ", rumus_lwbp);
     printf("\n\tBiaya denda                             = Rp.%.2f", rumus_denda);
     printf("\n\tBiaya Pajak Penerangan Jalan            = Rp.%.2f", ppj);
-    printf("\n\tBiaya pemakaian listrik(kWh)            = Rp. %.2f", rumus_rekening);
+    printf("\n\tBiaya pemakaian listrik(kWh)            = Rp.%.2f", rumus_rekening);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    printf("\n\tjumlah tagihan anda                     = Rp %.2f", rumus_rekening_total);
+    printf("\n\tjumlah tagihan anda                     = Rp.%.2f", rumus_rekening_total);
 }
 
 int main(){
+    admin_login();
     pilih_golongan();
 
 }
