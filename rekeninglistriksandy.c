@@ -10,7 +10,7 @@ void rumah_tangga();
 void bisnis();
 void industri();
 void fasilitas_publik();
-void upgrade_daya_listrik();
+//void upgrade_daya_listrik();
 void pilih_golongan_pascabayar();
 void pilih_golongan_prabayar();
 void rumah_tangga_prabayar();
@@ -682,7 +682,7 @@ void rumah_tangga(){
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\t||                        Perusahaan Listrik Negara                        ||");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    printf("\n\t||                        Informasi Tagihan Listrik                        ||");
+    printf("\n\t||                   Informasi Tagihan Listrik Pascabayar                  ||");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tGolongan Rumah Tangga : %s", golongan[(int)pilih_dayalistrik-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -1052,7 +1052,7 @@ void bisnis(){
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\t||                        Perusahaan Listrik Negara                        ||");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    printf("\n\t||                        Informasi Tagihan Listrik                        ||");
+    printf("\n\t||                   Informasi Tagihan Listrik Pascabayar                  ||");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tGolongan Bisnis : %s", golongan[(int)pilih_dayalistrik-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -1428,7 +1428,7 @@ void industri(){
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\t||                        Perusahaan Listrik Negara                        ||");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    printf("\n\t||                        Informasi Tagihan Listrik                        ||");
+    printf("\n\t||                   Informasi Tagihan Listrik Pascabayar                  ||");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tGolongan Industri : %s", golongan[(int)pilih_dayalistrik-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -1812,7 +1812,7 @@ void fasilitas_publik(){
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\t||                        Perusahaan Listrik Negara                        ||");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-    printf("\n\t||                        Informasi Tagihan Listrik                        ||");
+    printf("\n\t||                   Informasi Tagihan Listrik Pascabayar                  ||");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tGolongan Fasilitas Publik : %s", golongan[(int)pilih_dayalistrik-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -1877,6 +1877,7 @@ void rumah_tangga_prabayar(){
     char golongan[5] [10] = {"R-1/TR", "R-1/TR", "R-1/TR", "R-2/TR", "R-3/TR"};
     float dayalistrik_2[5] = {900, 1300, 2200, 5500, 6600};
     float jumlah_bayar;
+    int input_pilihan_ppj;
     float ppj;
     char rekening[20];
     char nama[128];
@@ -1932,8 +1933,33 @@ void rumah_tangga_prabayar(){
         while(jumlah_bayar=getchar() != '\n');
     }
 
-    ppj = 0.03 * jumlah_bayar;
-
+    printf("\n\t================================================================");
+    printf("\n\t|              Silahkan Pilih Daerah Provinsi Bali             |");
+    printf("\n\t================================================================");
+    printf("\n\t| (1) Denpasar atau Badung                                     |");
+    printf("\n\t| (2) Tabanan atau Karangasem                                  |");
+    printf("\n\t| (3) Negara                                                   |");
+    printf("\n\t| (4) Gianyar, Bangli, Klungkung atau Singaraja                |");
+    printf("\n\t================================================================");
+    printf("\n\tMasukkan pilihan : ");
+    while(scanf("%d", &input_pilihan_ppj)==0 || input_pilihan_ppj<1 || input_pilihan_ppj >4){
+        printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
+        printf("\n\tInputan harus berupa angka");
+        printf("\n\t================================================================");
+        printf("\n\tMasukkan pilihan : ");
+        while(input_pilihan_ppj=getchar() != '\n');
+    }
+    
+    if (input_pilihan_ppj==1){
+        ppj = 0.05 * jumlah_bayar;
+    }else if (input_pilihan_ppj==2){
+        ppj = 0.08 * jumlah_bayar;
+    }else if (input_pilihan_ppj==3){
+        ppj = 0.09 * jumlah_bayar;
+    }else if (input_pilihan_ppj==4){
+        ppj = 0.1 * jumlah_bayar;
+    }
+    
     close();
 
     float rumus_rekening_total;
@@ -1994,6 +2020,7 @@ void bisnis_prabayar(){
     char golongan[2] [10] = {"B-2/TR", "B-3/TM"};
     float dayalistrik_2[5] = {6600, 200000};
     float jumlah_bayar;
+    int input_pilihan_ppj;
     float ppj;
     char rekening[20];
     char nama[128];
@@ -2046,7 +2073,32 @@ void bisnis_prabayar(){
         while(jumlah_bayar=getchar() != '\n');
     }
 
-    ppj = 0.03 * jumlah_bayar;
+    printf("\n\t================================================================");
+    printf("\n\t|              Silahkan Pilih Daerah Provinsi Bali             |");
+    printf("\n\t================================================================");
+    printf("\n\t| (1) Denpasar atau Badung                                     |");
+    printf("\n\t| (2) Tabanan atau Karangasem                                  |");
+    printf("\n\t| (3) Negara                                                   |");
+    printf("\n\t| (4) Gianyar, Bangli, Klungkung atau Singaraja                |");
+    printf("\n\t================================================================");
+    printf("\n\tMasukkan pilihan : ");
+    while(scanf("%d", &input_pilihan_ppj)==0 || input_pilihan_ppj<1 || input_pilihan_ppj >4){
+        printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
+        printf("\n\tInputan harus berupa angka");
+        printf("\n\t================================================================");
+        printf("\n\tMasukkan pilihan : ");
+        while(input_pilihan_ppj=getchar() != '\n');
+    }
+    
+    if (input_pilihan_ppj==1){
+        ppj = 0.05 * jumlah_bayar;
+    }else if (input_pilihan_ppj==2){
+        ppj = 0.08 * jumlah_bayar;
+    }else if (input_pilihan_ppj==3){
+        ppj = 0.09 * jumlah_bayar;
+    }else if (input_pilihan_ppj==4){
+        ppj = 0.1 * jumlah_bayar;
+    }
 
     close();
 
@@ -2090,6 +2142,7 @@ void industri_prabayar(){
     char golongan[2] [10] = {"I-3/TM", "I-4/TT"};
     float dayalistrik_2[5] = {200000, 30000000};
     float jumlah_bayar;
+    int input_pilihan_ppj;
     float ppj;
     char rekening[20];
     char nama[128];
@@ -2134,7 +2187,7 @@ void industri_prabayar(){
     // scanf("%[^\n]s", &alamat);
 
     printf("\n\tMasukkan Jumlah Pembayaran (Rp) : ");
-    while(scanf("%f", &jumlah_bayar)==0){
+    while(scanf("%d", &jumlah_bayar)==0){
         printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
         printf("\n\tInputan harus berupa angka");
         printf("\n\t================================================================");
@@ -2143,8 +2196,32 @@ void industri_prabayar(){
     }
     close();
 
-    ppj = jumlah_bayar * 0.03;
-
+    printf("\n\t================================================================");
+    printf("\n\t|              Silahkan Pilih Daerah Provinsi Bali             |");
+    printf("\n\t================================================================");
+    printf("\n\t| (1) Denpasar atau Badung                                     |");
+    printf("\n\t| (2) Tabanan atau Karangasem                                  |");
+    printf("\n\t| (3) Negara                                                   |");
+    printf("\n\t| (4) Gianyar, Bangli, Klungkung atau Singaraja                |");
+    printf("\n\t================================================================");
+    printf("\n\tMasukkan pilihan : ");
+    while(scanf("%f", &input_pilihan_ppj)==0 || input_pilihan_ppj<1 || input_pilihan_ppj >4){
+        printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
+        printf("\n\tInputan harus berupa angka");
+        printf("\n\t================================================================");
+        printf("\n\tMasukkan pilihan : ");
+        while(input_pilihan_ppj=getchar() != '\n');
+    }
+    
+    if (input_pilihan_ppj==1){
+        ppj = 0.05 * jumlah_bayar;
+    }else if (input_pilihan_ppj==2){
+        ppj = 0.08 * jumlah_bayar;
+    }else if (input_pilihan_ppj==3){
+        ppj = 0.09 * jumlah_bayar;
+    }else if (input_pilihan_ppj==4){
+        ppj = 0.1 * jumlah_bayar;
+    }
     float rumus_rekening_total;
 
     // diatas 200 kVA
@@ -2185,6 +2262,7 @@ void fasilitas_publik_prabayar(){
     char golongan[3] [10] = {"P-1/TR", "P-2/TM", "P-3/TR"};
     float dayalistrik_2[5] = {6600, 200000, 0};
     float jumlah_bayar;
+    int input_pilihan_ppj;
     float ppj;
     char rekening[20];
     char nama[128];
@@ -2238,7 +2316,32 @@ void fasilitas_publik_prabayar(){
         while(jumlah_bayar=getchar() != '\n');
     }
 
-    ppj = 0.03 * jumlah_bayar;
+    printf("\n\t================================================================");
+    printf("\n\t|              Silahkan Pilih Daerah Provinsi Bali             |");
+    printf("\n\t================================================================");
+    printf("\n\t| (1) Denpasar atau Badung                                     |");
+    printf("\n\t| (2) Tabanan atau Karangasem                                  |");
+    printf("\n\t| (3) Negara                                                   |");
+    printf("\n\t| (4) Gianyar, Bangli, Klungkung atau Singaraja                |");
+    printf("\n\t================================================================");
+    printf("\n\tMasukkan pilihan : ");
+    while(scanf("%d", &input_pilihan_ppj)==0 || input_pilihan_ppj<1 || input_pilihan_ppj>4){
+        printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
+        printf("\n\tInputan harus berupa angka");
+        printf("\n\t================================================================");
+        printf("\n\tMasukkan pilihan : ");
+        while(input_pilihan_ppj=getchar() != '\n');
+    }
+    
+    if (input_pilihan_ppj==1){
+        ppj = 0.05 * jumlah_bayar;
+    }else if (input_pilihan_ppj==2){
+        ppj = 0.08 * jumlah_bayar;
+    }else if (input_pilihan_ppj==3){
+        ppj = 0.09 * jumlah_bayar;
+    }else if (input_pilihan_ppj==4){
+        ppj = 0.1 * jumlah_bayar;
+    }
 
     float rumus_rekening_total;
     
@@ -2283,7 +2386,9 @@ void fasilitas_publik_prabayar(){
 
 int main(){
     logopln();
-    close();
+    printf("\n\tTekan enter untuk melanjutkan");
+    getchar();
+    system("clear");
     //pilih_admin_login();
     pilih_fitur();
 }
