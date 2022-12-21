@@ -90,7 +90,6 @@ void penutup (){
     printf ("\n\t||    Terima kasih telah menggunakan layanan kami     ||");
     printf ("\n\t||              Salam Hangat Dari Kami                ||");
     printf ("\n\t========================================================");
-    printf ("\n\t========================================================");
     printf ("\n\t||             Perusahaan Listrik Negara              ||");
     printf ("\n\t========================================================");
 }
@@ -960,11 +959,41 @@ void bisnis(){
         printf("\n\tMasukkan tahun tagihan : ");
         while( tahun = getchar()!= '\n');
     }
+    
+    close();
 
     float rumus_rekening;
     float rumus_rekening_total;
     float rumus_denda;
     float ppj;
+    int input_pilihan_ppj;
+
+    printf("\n\t================================================================");
+    printf("\n\t|              Silahkan Pilih Daerah Provinsi Bali             |");
+    printf("\n\t================================================================");
+    printf("\n\t| (1) Denpasar atau Badung                                     |");
+    printf("\n\t| (2) Tabanan atau Karangasem                                  |");
+    printf("\n\t| (3) Negara                                                   |");
+    printf("\n\t| (4) Gianyar, Bangli, Klungkung atau Singaraja                |");
+    printf("\n\t================================================================");
+    printf("\n\tMasukkan pilihan : ");
+    while(scanf("%d", &input_pilihan_ppj)==0 || input_pilihan_ppj<1 || input_pilihan_ppj >4){
+        printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
+        printf("\n\tInputan harus berupa angka");
+        printf("\n\t================================================================");
+        printf("\n\tMasukkan pilihan : ");
+        while(input_pilihan_ppj=getchar() != '\n');
+    }
+
+    if (input_pilihan_ppj==1){
+        ppj = 0.05 * (rumus_lwbp + rumus_wbp);
+    }else if (input_pilihan_ppj==2){
+        ppj = 0.08 * (rumus_lwbp + rumus_wbp);
+    }else if (input_pilihan_ppj==3){
+        ppj = 0.09 * (rumus_lwbp + rumus_wbp);
+    }else if (input_pilihan_ppj==4){
+        ppj = 0.1 * (rumus_lwbp + rumus_wbp);
+    }
 
     // 6600 VA - 200.000 VA
     if (pilih_dayalistrik==1 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
@@ -1045,15 +1074,13 @@ void bisnis(){
     // di atas 200.000 VA
     else if (pilih_dayalistrik==2 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         rumus_denda = 0;
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh) ;
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh) ;
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 && tanggal > 20 && tanggal <=31 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 1, di tahun yang sama
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1064,8 +1091,7 @@ void bisnis(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 && bulan == tm.tm_mon  && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 2, di tahun yang sama
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1076,8 +1102,7 @@ void bisnis(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon -1 && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 3, di tahun yang sama
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1088,8 +1113,7 @@ void bisnis(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1899){  // Terkena Denda Biaya Keterlambatan 2, di tahun yang beda
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1101,7 +1125,6 @@ void bisnis(){
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon -1 && tahun == tm.tm_year + 1899){ // Terkena Denda Biaya Keterlambatan 3, di tahun yang beda
         rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1344,23 +1367,53 @@ void industri(){
         while( tahun = getchar()!= '\n');
     }
 
+    close();
+
     float rumus_rekening_total;
     float rumus_rekening;
     float rumus_denda;
     float ppj;
+    int input_pilihan_ppj;
+
+    printf("\n\t================================================================");
+    printf("\n\t|              Silahkan Pilih Daerah Provinsi Bali             |");
+    printf("\n\t================================================================");
+    printf("\n\t| (1) Denpasar atau Badung                                     |");
+    printf("\n\t| (2) Tabanan atau Karangasem                                  |");
+    printf("\n\t| (3) Negara                                                   |");
+    printf("\n\t| (4) Gianyar, Bangli, Klungkung atau Singaraja                |");
+    printf("\n\t================================================================");
+    printf("\n\tMasukkan pilihan : ");
+    while(scanf("%d", &input_pilihan_ppj)==0 || input_pilihan_ppj<1 || input_pilihan_ppj >4){
+        printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
+        printf("\n\tInputan harus berupa angka");
+        printf("\n\t================================================================");
+        printf("\n\tMasukkan pilihan : ");
+        while(input_pilihan_ppj=getchar() != '\n');
+    }
+
+    if (input_pilihan_ppj==1){
+        ppj = 0.05;
+    }else if (input_pilihan_ppj==2){
+        ppj = 0.08;
+    }else if (input_pilihan_ppj==3){
+        ppj = 0.09;
+    }else if (input_pilihan_ppj==4){
+        ppj = 0.1;
+    }
 
     // diatas 200 kVA
     if (pilih_dayalistrik==1 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         rumus_denda = 0;
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh) ;
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * ppj) + (rumus_kVArh) ;
+        ppj = (rumus_lwbp + rumus_wbp) * ppj;
         if (pemakaian <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==1 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 && tanggal > 20 && tanggal <=31 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 1, di tahun yang sama
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * ppj) + (rumus_kVArh);
+        ppj = (rumus_lwbp + rumus_wbp) * ppj;
         if (pemakaian <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1371,8 +1424,8 @@ void industri(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==1 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 2, di tahun yang sama
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * ppj) + (rumus_kVArh);
+        ppj = (rumus_lwbp + rumus_wbp) * ppj;
         if (pemakaian <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1383,8 +1436,8 @@ void industri(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==1 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon -1 && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 3, di tahun yang sama
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * ppj) + (rumus_kVArh);
+        ppj = (rumus_lwbp + rumus_wbp) * ppj;
         if (pemakaian <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1395,8 +1448,8 @@ void industri(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==1 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1899){  // Terkena Denda Biaya Keterlambatan 2, di tahun yang beda
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * ppj) + (rumus_kVArh);
+        ppj = (rumus_lwbp + rumus_wbp) * ppj;
         if (pemakaian <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1407,8 +1460,8 @@ void industri(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==1 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon -1 && tahun == tm.tm_year + 1899){ // Terkena Denda Biaya Keterlambatan 3, di tahun yang beda
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * ppj) + (rumus_kVArh);
+        ppj = (rumus_lwbp + rumus_wbp) * ppj;
         if (pemakaian <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1421,16 +1474,16 @@ void industri(){
     }
     // 30.000 kVA ke atas
     else if (pilih_dayalistrik==2 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
-        rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * 0.03) + (rumus_kVArh) ;
-        ppj = (rumus_beban_wbp_dan_lwbp) * 0.03;
+        rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * ppj) + (rumus_kVArh) ;
+        ppj = ppj * (rumus_beban_wbp_dan_lwbp) ;
         if (pemakaian <= 1200000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (rumus_beban_wbp_dan_lwbp + (rumus_kVArh));
         }
         rumus_denda = 0;
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==30000000 && tanggal > 20 && tanggal <=31 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 1, di tahun yang sama
-        rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * 0.03) + (rumus_kVArh) ;
-        ppj = (rumus_beban_wbp_dan_lwbp) * 0.03;
+        rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * ppj) + (rumus_kVArh) ;
+        ppj = ppj * (rumus_beban_wbp_dan_lwbp) ;
         if (pemakaian <= 1200000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (rumus_beban_wbp_dan_lwbp + (rumus_kVArh));
         }
@@ -1441,8 +1494,8 @@ void industri(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==30000000 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 2, di tahun yang sama
-        rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * 0.03) + (rumus_kVArh) ;
-        ppj = (rumus_beban_wbp_dan_lwbp) * 0.03;
+        rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * ppj) + (rumus_kVArh) ;
+        ppj = ppj * (rumus_beban_wbp_dan_lwbp) ;
         if (pemakaian <= 1200000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (rumus_beban_wbp_dan_lwbp + (rumus_kVArh));
         }
@@ -1453,8 +1506,8 @@ void industri(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==30000000 &&  bulan == tm.tm_mon -1 && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 3, di tahun yang sama
-        rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * 0.03) + (rumus_kVArh) ;
-        ppj = (rumus_beban_wbp_dan_lwbp) * 0.03;
+        rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * ppj) + (rumus_kVArh) ;
+        ppj = ppj * (rumus_beban_wbp_dan_lwbp) ;
         if (pemakaian <= 1200000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (rumus_beban_wbp_dan_lwbp + (rumus_kVArh));
         }
@@ -1466,8 +1519,8 @@ void industri(){
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==30000000 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1899){  // Terkena Denda Biaya Keterlambatan 2, di tahun yang beda
         rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (rumus_beban_wbp_dan_lwbp + (rumus_kVArh));
-        rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * 0.03) + (rumus_kVArh) ;
-        ppj = (rumus_beban_wbp_dan_lwbp) * 0.03;
+        rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * ppj) + (rumus_kVArh) ;
+        ppj = ppj * (rumus_beban_wbp_dan_lwbp) ;
         if (pemakaian <= 1200000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (rumus_beban_wbp_dan_lwbp + (rumus_kVArh));
         }
@@ -1478,8 +1531,8 @@ void industri(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==30000000 &&  bulan == tm.tm_mon -1 && tahun == tm.tm_year + 1899){ // Terkena Denda Biaya Keterlambatan 3, di tahun yang beda
-        rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * 0.03) + (rumus_kVArh) ;
-        ppj = (rumus_beban_wbp_dan_lwbp) * 0.03;
+        rumus_rekening = (rumus_beban_wbp_dan_lwbp) + ((rumus_beban_wbp_dan_lwbp) * ppj) + (rumus_kVArh) ;
+        ppj = ppj *(rumus_beban_wbp_dan_lwbp) ;
         if (pemakaian <= 1200000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (rumus_beban_wbp_dan_lwbp + (rumus_kVArh));
         }
@@ -1718,10 +1771,40 @@ void fasilitas_publik(){
         while( tahun = getchar()!= '\n');
     }
 
+    close();
+
     float rumus_rekening_total;
     float rumus_rekening;
     float rumus_denda;
     float ppj;
+    int input_pilihan_ppj;
+
+    printf("\n\t================================================================");
+    printf("\n\t|              Silahkan Pilih Daerah Provinsi Bali             |");
+    printf("\n\t================================================================");
+    printf("\n\t| (1) Denpasar atau Badung                                     |");
+    printf("\n\t| (2) Tabanan atau Karangasem                                  |");
+    printf("\n\t| (3) Negara                                                   |");
+    printf("\n\t| (4) Gianyar, Bangli, Klungkung atau Singaraja                |");
+    printf("\n\t================================================================");
+    printf("\n\tMasukkan pilihan : ");
+    while(scanf("%d", &input_pilihan_ppj)==0 || input_pilihan_ppj<1 || input_pilihan_ppj >4){
+        printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
+        printf("\n\tInputan harus berupa angka");
+        printf("\n\t================================================================");
+        printf("\n\tMasukkan pilihan : ");
+        while(input_pilihan_ppj=getchar() != '\n');
+    }
+
+    if (input_pilihan_ppj==1){
+        ppj = 0.05 * (rumus_lwbp + rumus_wbp);
+    }else if (input_pilihan_ppj==2){
+        ppj = 0.08 * (rumus_lwbp + rumus_wbp);
+    }else if (input_pilihan_ppj==3){
+        ppj = 0.09 * (rumus_lwbp + rumus_wbp);
+    }else if (input_pilihan_ppj==4){
+        ppj = 0.1 * (rumus_lwbp + rumus_wbp);
+    }
 
     // 6600 VA - 200.000 VA
     if (pilih_dayalistrik==1 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
@@ -1802,15 +1885,15 @@ void fasilitas_publik(){
     // di atas 200.000 VA
     else if (pilih_dayalistrik==2 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         rumus_denda = 0;
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh) ;
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh) ;
+        
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 && tanggal > 20 && tanggal <=31 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 1, di tahun yang sama
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
+        
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1821,8 +1904,8 @@ void fasilitas_publik(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 2, di tahun yang sama
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
+        
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1833,8 +1916,8 @@ void fasilitas_publik(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon -1 && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 3, di tahun yang sama
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
+        
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1845,8 +1928,8 @@ void fasilitas_publik(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1899){  // Terkena Denda Biaya Keterlambatan 2, di tahun yang beda
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
+        
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1857,8 +1940,8 @@ void fasilitas_publik(){
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon -1 && tahun == tm.tm_year + 1899){ // Terkena Denda Biaya Keterlambatan 3, di tahun yang beda
-        rumus_rekening = (rumus_lwbp + rumus_wbp) + ((rumus_lwbp + rumus_wbp) * 0.03) + (rumus_kVArh);
-        ppj = (rumus_lwbp + rumus_wbp) * 0.03;
+        rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
+        
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
