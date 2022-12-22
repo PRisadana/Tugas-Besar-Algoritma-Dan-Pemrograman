@@ -2,24 +2,30 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <windows.h> // untuk memanipulasi semua hal tentang windows
 
 void close();
-void penutup ();
+void ulang();
 void penutup ();
 int main();
-
+void pilih_fitur();
 void logopln();
+
+// fungsi fungsi golongan pascabayar
+void pilih_golongan_pascabayar();
 void rumah_tangga();
 void bisnis();
 void industri();
 void fasilitas_publik();
-void upgrade_daya_listrik();
-void pilih_golongan_pascabayar();
+
+//fungsi fungsi golongan prabayar
 void pilih_golongan_prabayar();
 void rumah_tangga_prabayar();
 void bisnis_prabayar();
 void industri_prabayar();
 void fasilitas_publik_prabayar();
+
+//fungsi fungsi golongan menaikkan daya
 void upgrade_daya_listrik();
 void daya_awal_450();
 void daya_awal_900();
@@ -28,16 +34,19 @@ void daya_awal_2200();
 void daya_awal_3500();
 void daya_awal_4400();
 
+//fungsi fungsi untuk menulis hasil transaksi pascabayar ke file .txt
 void cetak_rumah_tangga(char golongan[5] [10], float pilih_dayalistrik, char nama[128], char rekening[20], char alamat[128], int tanggal, int bulan, int tahun, char dayalistrik[5] [32], float pemakaian, float rumus_denda, float rumus_rekening, float rumus_rekening_total );
 void cetak_bisnis(char golongan[2] [10], float pilih_dayalistrik, char nama[128], char rekening[20], char alamat[128], int tanggal, int bulan, int tahun, float pemakaian1, float pemakaian2, float rumus_kVArh, float k, char dayalistrik[2] [32], float rumus_wbp, float rumus_lwbp, float rumus_denda, float rumus_rekening, float rumus_rekening_total, float ppj );
 void cetak_industri(char golongan[2] [10], float pilih_dayalistrik, char nama[128], char rekening[20], char alamat[128], int tanggal, int bulan, int tahun, float pemakaian, float rumus_kVArh, float k, char dayalistrik[2] [32], float rumus_wbp, float rumus_lwbp, float rumus_beban_wbp_dan_lwbp, float rumus_denda, float rumus_rekening, float rumus_rekening_total, float ppj );
 void cetak_fasilitas_publik(char golongan[3] [10], float pilih_dayalistrik, char nama[128], char rekening[20], char alamat[128], int tanggal, int bulan, int tahun, float pemakaian1, float pemakaian2, float rumus_kVArh, float k, char dayalistrik[3] [32], float rumus_wbp, float rumus_lwbp, float rumus_denda, float rumus_rekening, float rumus_rekening_total, float ppj );
 
+//fungsi fungsi untuk menulis hasil transaksi prabayar ke file .txt
 void cetak_rumah_tangga_prabayar(char golongan[5] [10], float pilih_dayalistrik, char nama[128], char rekening[20], char alamat[128],int token, char dayalistrik[5] [32], float jumlah_bayar, float rumus_rekening_total);
 void cetak_bisnis_prabayar(char golongan[2] [10], float pilih_dayalistrik, char nama[128], char rekening[20], char alamat[128],int token, char dayalistrik[2] [32], float jumlah_bayar, float rumus_rekening_total);
 void cetak_industri_prabayar(char golongan[2] [10], float pilih_dayalistrik, char nama[128], char rekening[20], char alamat[128],int token, char dayalistrik[2] [32], float jumlah_bayar, float rumus_rekening_total);
 void cetak_fasilitas_publik_prabayar(char golongan[3] [10], float pilih_dayalistrik, char nama[128], char rekening[20], char alamat[128],int token, char dayalistrik[3] [32], float jumlah_bayar, float rumus_rekening_total);
 
+//fungsi fungsi untuk menulis hasil transaksi menaikkan daya ke file .txt
 void cetak_daya_awal_450(int daya_upgrade[6], int pilih_daya_upgrade, char nama[128], char id_pelanggan[20], char alamat[128], float biaya_penyambungan);
 void cetak_daya_awal_900(int daya_upgrade[5], int pilih_daya_upgrade, char nama[128], char id_pelanggan[20], char alamat[128], float biaya_penyambungan);
 void cetak_daya_awal_1300(int daya_upgrade[4], int pilih_daya_upgrade, char nama[128], char id_pelanggan[20], char alamat[128], float biaya_penyambungan);
@@ -45,13 +54,105 @@ void cetak_daya_awal_2200(int daya_upgrade[3], int pilih_daya_upgrade, char nama
 void cetak_daya_awal_3500(int daya_upgrade[2], int pilih_daya_upgrade, char nama[128], char id_pelanggan[20], char alamat[128], float biaya_penyambungan);
 void cetak_daya_awal_4400(int daya_upgrade[1], int pilih_daya_upgrade, char nama[128], char id_pelanggan[20], char alamat[128], float biaya_penyambungan);
 
-//void cetakakunregister(char username_register[50], char password_register[8]);
+//fungsi fungsi untuk melihat data transaksi pelanggan dari file .txt
+void data_transaksi_pelanggan();
+void lihat_ubah_daya();
+void lihat_tagihan_pascabayar();
+void lihat_tagihan_prabayar();
+
+//fungsi fungsi untuk sistem login
+void login();
+void ulang_login();
+// void gotoxy(int x, int y);
 
 //LWBP = Luar Waktu Beban Puncak (22.00 s.d. 18.00)
 //WBP = Waktu Beban Puncak (18.00 s.d. 22.00)
 
+struct pegawai {
+    char username[16];
+    char password[10];
+};
+
+struct pegawai pegawai1 = {"Sandy", "resandy35"};
+
+struct pegawai pegawai2 = {"Abdy", "arysada11"};
+
+struct pegawai pegawaisaatini;
+
+// void gotoxy(int x, int y){
+//     COORD coord = {0, 0}; //struk koordinat
+//     coord.X = x;
+//     coord.Y = y;
+//     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord); // baris untuk memanipulasi posisi cursor
+// }
+
+void login(){
+    system("clear");
+    printf("\n\t================================================================");
+    printf("\n\t|                  Silahkan Login Terlebih Dahulu              |");
+    printf("\n\t================================================================");
+    printf("\n\tMasukkan Username : ");
+    scanf("%s", &pegawaisaatini.username);
+    printf("\n\tMasukkan Password : ");
+    scanf("%s", &pegawaisaatini.password);
+    // char ch;
+    // char i =0;
+    // int x = 20; // simpan panjang karakter "Masukkan Password : " karena akan dimanipulasi di koordinat x
+    // while ((ch = getchar()) != 13){//((ch= (char) _getc_r()) != '\r'){
+    //     if(ch == 8){ // dalam bilangan ASCII backspace desimal = 8
+    //         pegawaisaatini.password[i] = '\0';
+    //         gotoxy(x-1, 1);
+    //         printf(" "); // kita akan replace dengan spasi
+    //         x--;
+    //         i--;
+    //         gotoxy(x, 1);
+    //     }
+    //     else{
+    //     pegawaisaatini.password[i] = ch;
+    //     gotoxy(x, 1);
+    //     printf("*");
+    //     x++;
+    //     i++;
+    //     }
+    // }
+
+    // printf("\n");
+    
+    close();
+
+    if ((strcmp (pegawaisaatini.username, pegawai1.username) ==0) && (strcmp (pegawaisaatini.password, pegawai1.password)==0)){
+        printf("\n\t+--------------------------------------------------------------+");
+        printf("\n\t|                       Login Berhasil                         |");
+        printf("\n\t+--------------------------------------------------------------+");
+        printf("\n\tSelamat Datang %s", pegawai1.username);
+        printf("\n\t+--------------------------------------------------------------+");
+        close();
+    }else if ((strcmp (pegawaisaatini.username, pegawai2.username) ==0) && (strcmp (pegawaisaatini.password, pegawai2.password)==0)){
+        printf("\n\t+--------------------------------------------------------------+");
+        printf("\n\t|                       Login Berhasil                         |");
+        printf("\n\t+--------------------------------------------------------------+");
+        printf("\n\tSelamat Datang %s", pegawai2.username);
+        printf("\n\t+--------------------------------------------------------------+");
+        close();
+    }else{
+        printf("\n\t+--------------------------------------------------------------+");
+        printf("\n\t|                          Login Gagal                         |");
+        printf("\n\t+--------------------------------------------------------------+");
+        printf("\n\t| Username atau password yang anda inputkan salah              |");
+        printf("\n\t| Silahkan ulangi                                              |");
+        printf("\n\t+--------------------------------------------------------------+");
+        close();
+        ulang_login();
+    }
+
+}
+
+void ulang_login(){
+    login();
+}
+
 void close(){
-    printf("\n\tBerikutnya...");
+    printf("\n\tBerikutnya");
     getchar();
     printf("\n\tKetik enter untuk melanjutkan...");
     getchar();
@@ -59,15 +160,16 @@ void close(){
 }
 
 void ulang(){
+    fflush(stdin);
     int menu;
     printf ("\n\t========================================================");
     printf ("\n\t||        Apakah anda ingin mengulang program         ||");
     printf ("\n\t========================================================");
-    printf ("\n\t(1) Ya, saya ingin menghitung kembali                   ");
+    printf ("\n\t(1) Ya, saya ingin mengulang kembali                    ");
     printf ("\n\t(2) Tidak, sudah selesai                                ");
     printf ("\n\t========================================================");
     printf ("\n\tMasukkan angka untuk memilih  :  ");
-    while (scanf  ("%d", &menu)==0 || menu<1 || menu>2){
+    while (scanf ("%d", &menu)==0 || menu<1 || menu>2){
         printf ("\t---------------------------------------");
         printf ("\n\tKarakter yang anda inputkan salah");
         printf ("\n\tSilahkan inputkan ulang");
@@ -78,7 +180,7 @@ void ulang(){
 
     if (menu==1){
         close();
-        main();
+        pilih_fitur();
     }else if (menu==2){
         close();
         penutup();
@@ -94,211 +196,8 @@ void penutup (){
     printf ("\n\t========================================================");
 }
 
-// void pilih_admin_login(){
-//     int pilih;
-//     printf("\n\t================================================================");
-//     printf("\n\t|                       Admin Login Account                    |");
-//     printf("\n\t================================================================");
-//     printf("\n\t| (1) Register                                                 |");
-//     printf("\n\t| (2) Login                                                    |");
-//     printf("\n\t================================================================");
-//     printf("\n\t| Masukkan pilihan : ");
-//     while(scanf("%d", &pilih)==0 || pilih<1 || pilih >2){
-//         printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
-//         printf("\n\tInputan harus berupa angka");
-//         printf("\n\t================================================================");
-//         printf("\n\t| Masukkan pilihan : ");
-//         while( pilih = getchar() != '\n');
-//     }
-//     close();
-//     if (pilih==1){
-//         admin_register();
-//     }else if (pilih==2){
-//         admin_login();
-//     };
-
-    // if(pilih==1){
-    //     printf("\n\t================================================================");
-    //     printf("\n\t|                       Register Account                       |");
-    //     printf("\n\t================================================================");
-    //     printf("\n\tMasukkan username : ");
-    //     //fgets(username_register, sizeof(username_register), stdin);
-    //     scanf("%[^\n]s", login.username_register);
-    //     printf("\n\tMasukkan password : ");
-    //     //fgets(password_register, sizeof(password_register), stdin);
-    //     scanf("%[^\n]s", login.password_register);
-    //     printf("\n\t================================================================");
-    //     printf("\n\t|                        Register Succes                       |");
-    //     printf("\n\t================================================================");
-    //     cetakakunregister(login.username_register, login.password_register);
-    //     close();
-    //     printf("\n\t================================================================");
-    //     printf("\n\t|                         Login Account                        |");
-    //     printf("\n\t================================================================");
-    //     printf("\n\tMasukkan username : ");
-    //     //fgets(username_login, sizeof(username_login), stdin);
-    //     printf("\n\tMasukkan password : ");
-    //     //fgets(password_login, sizeof(password_login), stdin);
-    //     if( strcmp(username_register, username_login)==0 && strcmp(password_register, password_login)==0){ // strcmp akan mennghasilkan nilai 0 jika yang dibandingkan sama
-    //         printf("\n\t================================================================");
-    //         printf("\n\t|                         Login Succes                         |");
-    //         printf("\n\t----------------------------------------------------------------");
-    //         printf("\n\tSelamat datang %s ", username_login);
-    //         printf("\n\t----------------------------------------------------------------");
-    //         close();
-    //     }else{
-    //         printf("\n\t================================================================");
-    //         printf("\n\t|                          PERINGATAN                          |");
-    //         printf("\n\t----------------------------------------------------------------");
-    //         printf("\n\t| Username atau password yang anda masukkan salah !            |");
-    //         printf("\n\t| Silahkan login ulang                                         |");
-    //         printf("\n\t----------------------------------------------------------------");
-    //         close();
-    //     }
-    // }else if (pilih==2){
-    //     //deklarasi variabel yang akan digunakan untuk menyimpan nilai yang diambil dari file txt
-    //     char username_login_txt[50];
-    //     char password_login_txt[8];
-    //     //Membaca file txt
-    //     FILE *fptr;
-
-    //     if ((fptr = fopen("akunregister.txt","r")) == NULL){
-    //     printf("Error: File tidak ada!");
-    //     // Tutup program karena file gak ada.
-    //     exit(1);
-    //     }
-
-    //     fgets(username_register, sizeof(username_register), stdin);
-    //     fgets(password_register, sizeof(password_register), stdin);
-
-    //     printf("\n\t================================================================");
-    //     printf("\n\t|                         Login Account                        |");
-    //     printf("\n\t================================================================");
-    //     printf("\n\tMasukkan username : ");
-    //     fgets(username_login, sizeof(username_login), stdin);
-    //     printf("\n\tMasukkan password : ");
-    //     fgets(password_login, sizeof(password_login), stdin);
-    //     if( strcmp(username_login, username_register)==0 && strcmp(password_login, password_register)==0){ // strcmp akan mennghasilkan nilai 0 jika yang dibandingkan sama
-    //         printf("\n\t================================================================");
-    //         printf("\n\t|                         Login Succes                         |");
-    //         printf("\n\t----------------------------------------------------------------");
-    //         printf("\n\t| Selamat datang %s                                            |", username_login);
-    //         printf("\n\t----------------------------------------------------------------");
-    //     }else{
-    //         printf("\n\t================================================================");
-    //         printf("\n\t|                          PERINGATAN                          |");
-    //         printf("\n\t----------------------------------------------------------------");
-    //         printf("\n\t| Username atau password yang anda masukkan salah !            |");
-    //         printf("\n\t| Silahkan login ulang                                         |");
-    //         printf("\n\t----------------------------------------------------------------");
-    //         close();
-    //     }
-    //     fclose(fptr);
-    //     close();
-    // }
-//}
-
-// void admin_register(){
-// //     char username_register[50];
-// //     char password_register[8];
-// //     printf("\n\t================================================================");
-// //     printf("\n\t|                       Register Account                       |");
-// //     printf("\n\t================================================================");
-// //     printf("\n\tMasukkan username : ");
-// //     //fgets(username_register, sizeof(username_register), stdin);
-// //     scanf("%[^\n]s", &username_register);
-// //     printf("\n\tMasukkan password : ");
-// //     //fgets(password_register, sizeof(password_register), stdin);
-// //     scanf("%[^\n]s", &password_register);
-// //     printf("\n\t================================================================");
-// //     printf("\n\t|                        Register Succes                       |");
-// //     printf("\n\t================================================================");
-// //     cetakakunregister(username_register, password_register);
-// //     cek_username_register(username_register);
-// //     cek_password_register(password_register);
-// //     close();
-// //     pilih_admin_login();
-// // }
-
-// void cek_username_register(char *username){
-//     char nama_pengguna[50];
-//     nama_pengguna = username;
-//     return nama_pengguna;
-// }
-
-// void cek_password_register(char *password){
-//     char kata_kunci[50];
-//     kata_kunci = password;
-//     return kata_kunci;
-// }
-
-// void admin_login(){
-//         //deklarasi variabel yang akan digunakan untuk menyimpan nilai yang diambil dari file txt
-//         char username_login_txt[50];
-//         char password_login_txt[8];
-//         //Membaca file txt
-//         FILE *fptr;
-
-//         if ((fptr = fopen("akunregister.txt","r")) == NULL){
-//         printf("Error: File tidak ada!");
-//         // Tutup program karena file gak ada.
-//         exit(1);
-//         }
-
-//         fgets(username_register, sizeof(username_register), stdin);
-//         fgets(password_register, sizeof(password_register), stdin);
-
-//         printf("\n\t================================================================");
-//         printf("\n\t|                         Login Account                        |");
-//         printf("\n\t================================================================");
-//         printf("\n\tMasukkan username : ");
-//         fgets(username_login, sizeof(username_login), stdin);
-//         printf("\n\tMasukkan password : ");
-//         fgets(password_login, sizeof(password_login), stdin);
-//         if( strcmp(username_login, username_register)==0 && strcmp(password_login, password_register)==0){ // strcmp akan mennghasilkan nilai 0 jika yang dibandingkan sama
-//             printf("\n\t================================================================");
-//             printf("\n\t|                         Login Succes                         |");
-//             printf("\n\t----------------------------------------------------------------");
-//             printf("\n\t| Selamat datang %s                                            |", username_login);
-//             printf("\n\t----------------------------------------------------------------");
-//         }else{
-//             printf("\n\t================================================================");
-//             printf("\n\t|                          PERINGATAN                          |");
-//             printf("\n\t----------------------------------------------------------------");
-//             printf("\n\t| Username atau password yang anda masukkan salah !            |");
-//             printf("\n\t| Silahkan login ulang                                         |");
-//             printf("\n\t----------------------------------------------------------------");
-//             close();
-//         }
-//         fclose(fptr);
-//         close();
-//     }
-
-// void cek_admin_login(char *username, char *password){
-    
-// }
-
-// void cetakakunregister(char username_register[50], char password_register[50]){
-//     //menulis file ke txt
-//     //membuat pointer
-//     FILE *fptr;
-
-//     //membuka file
-//     fptr = fopen("akunregister.txt", "a");
-
-//     if (fptr==NULL){
-//         printf ("\n\tFile tidak ditemukan");
-//         exit(0);
-//     }
-
-//         fprintf(fptr, "\n\t%s,%s ", username_register, password_register);
-
-//         fclose(fptr);//tutup file
-
-//         printf("\n\tAkun Telah Berhasil Disimpan\n");
-// }
-
 void pilih_fitur(){
+    fflush(stdin);
     int pilih;
     printf("\n\t================================================================");
     printf("\n\t|                      Silahkan Pilih Fitur                    |");
@@ -306,9 +205,10 @@ void pilih_fitur(){
     printf("\n\t| (1) Menaikkan Daya Listrik                                   |");
     printf("\n\t| (2) Menghitung Tagihan Listrik Pascabayar                    |");
     printf("\n\t| (3) Menghitung Tagihan Listrik Prabayar                      |");
+    printf("\n\t| (4) Melihat Data Transaksi Pelanggan                         |");
     printf("\n\t================================================================");
     printf("\n\t| Masukkan pilihan : ");
-    while(scanf("%d", &pilih)==0 || pilih<1 || pilih >3){
+    while(scanf("%d", &pilih)==0 || pilih<1 || pilih >4){
         printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
         printf("\n\tInputan harus berupa angka");
         printf("\n\t================================================================");
@@ -324,11 +224,14 @@ void pilih_fitur(){
         pilih_golongan_pascabayar();
     }else if(pilih==3){
         pilih_golongan_prabayar();
+    }else if(pilih==4){
+        data_transaksi_pelanggan();
     }
 
 }
 
 void pilih_golongan_pascabayar(){
+    fflush(stdin);
     int golongan;
     printf("\n\t================================================================");
     printf("\n\t|                  Silahkan Pilih Golongan Anda                |");
@@ -338,15 +241,17 @@ void pilih_golongan_pascabayar(){
     printf("\n\t| (3) Industri                                                 |");
     printf("\n\t| (4) Fasilitas publik                                         |");
     printf("\n\t================================================================");
+    printf("\n\t| (0) Kembali ke pilih fitur                                   |");
+    printf("\n\t================================================================");
     printf("\n\t| Masukkan pilihan : ");
-    while(scanf("%d", &golongan)==0 || golongan<1 || golongan >4){
+    while(scanf("%d", &golongan)==0 || golongan<0 || golongan >4){
         printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
         printf("\n\tInputan harus berupa angka");
         printf("\n\t================================================================");
         printf("\n\t| Masukkan pilihan : ");
         while( golongan = getchar() != '\n');
     }
-
+    
     close();
 
     if(golongan==1){
@@ -357,6 +262,8 @@ void pilih_golongan_pascabayar(){
         industri();
     }else if(golongan==4){
         fasilitas_publik();
+    }else if (golongan==0){
+        pilih_fitur();
     }
 
 }
@@ -398,6 +305,7 @@ void rumah_tangga(){
         while(pilih_dayalistrik=getchar() != '\n');
     }
 
+    
     close();
 
     printf("\n\t================================================================");
@@ -436,6 +344,7 @@ void rumah_tangga(){
     pemakaian = pemakaianbulanini - pemakaianbulanlalu;
 
     //pilih_dayalistrik = pilih_dayalistrik-1; 
+   
     close();
 
     printf("\n\t================================================================");
@@ -740,6 +649,7 @@ void rumah_tangga(){
         rumus_rekening_total = rumus_rekening + rumus_denda;
     }
 
+ 
     close();
 
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -750,9 +660,9 @@ void rumah_tangga(){
     printf("\n\tGolongan Rumah Tangga : %s", golongan[(int)pilih_dayalistrik-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO REK ID Pelanggan       : %s", rekening);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
+    printf("\tNO REK ID Pelanggan       : %s", rekening);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
     printf("\n\tTanggal pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tSumber Daya Listrik Digunakan = %s", dayalistrik[(int)pilih_dayalistrik-1]);
     printf("\n\tPemakaian anda bulan ini      = %.2f (kWh)", pemakaian);
@@ -765,6 +675,7 @@ void rumah_tangga(){
 }
 
 void bisnis(){
+    fflush(stdin);
     char dayalistrik[2] [32] = {"6.600 VA s.d. 200 kVA", "Di atas 200 kVA"};
     char golongan[2] [10] = {"B-2/TR", "B-3/TM"};
     float dayalistrik_2[5] = {6600, 200000};
@@ -811,6 +722,7 @@ void bisnis(){
         while(pilih_dayalistrik=getchar() != '\n');
     }
 
+    
     close();
 
     printf("\n\t================================================================");
@@ -930,6 +842,7 @@ void bisnis(){
         rumus_kVArh = 0;
     }
 
+   
     close();
 
     printf("\n\t================================================================");
@@ -959,6 +872,7 @@ void bisnis(){
         printf("\n\tMasukkan tahun tagihan : ");
         while( tahun = getchar()!= '\n');
     }
+
     
     close();
 
@@ -1136,6 +1050,7 @@ void bisnis(){
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }
 
+
     close();
 
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -1146,9 +1061,9 @@ void bisnis(){
     printf("\n\tGolongan Bisnis : %s", golongan[(int)pilih_dayalistrik-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO REK ID Pelanggan       : %s", rekening);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
+    printf("\tNO REK ID Pelanggan       : %s", rekening);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
     printf("\n\tTanggal pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tSumber Daya Listrik Digunakan           = %s", dayalistrik[(int)pilih_dayalistrik-1]);
     if(pilih_dayalistrik==1){
@@ -1170,6 +1085,7 @@ void bisnis(){
 }
 
 void industri(){
+    fflush(stdin);
     char dayalistrik[2] [32] = {"Di atas 200 kVA", "30.000 kVA ke atas"};
     char golongan[2] [10] = {"I-3/TM", "I-4/TT"};
     float dayalistrik_2[5] = {200000, 30000000};
@@ -1336,7 +1252,7 @@ void industri(){
     }else if(pilih_kVArh==0){
         rumus_kVArh = 0;
     }
-
+    
     close();
 
     printf("\n\t================================================================");
@@ -1555,9 +1471,9 @@ void industri(){
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
     printf("\n\tNO REK ID Pelanggan       : %s", rekening);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
-    printf("\n\tTanggal pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
+    printf("\tTanggal pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tSumber Daya Listrik Digunakan           = %s", dayalistrik[(int)pilih_dayalistrik-1]);
     printf("\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian);
     printf("\n\tBiaya pemakaian daya reaktif (kVArh)    = Rp.%.1f ", rumus_kVArh);
@@ -1575,6 +1491,7 @@ void industri(){
 }
 
 void fasilitas_publik(){
+    fflush(stdin);
     char dayalistrik[3] [32] = {"6.600 VA s.d. 200 kVA", "Di atas 200 kVA", "Penerangan Jalan Umum"};
     char golongan[3] [10] = {"P-1/TR", "P-2/TM", "P-3/TR"};
     float dayalistrik_2[5] = {6600, 200000, 0};
@@ -1970,9 +1887,9 @@ void fasilitas_publik(){
     printf("\n\tGolongan Fasilitas Publik : %s", golongan[(int)pilih_dayalistrik-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO REK ID Pelanggan       : %s", rekening);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
+    printf("\tNO REK ID Pelanggan       : %s", rekening);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
     printf("\n\tTanggal pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tSumber Daya Listrik Digunakan           = %s", dayalistrik[(int)pilih_dayalistrik-1]);
     if(pilih_dayalistrik==1){
@@ -1996,6 +1913,7 @@ void fasilitas_publik(){
 }
 
 void pilih_golongan_prabayar(){
+    fflush(stdin);
     int golongan;
     printf("\n\t================================================================");
     printf("\n\t|                  Silahkan Pilih Golongan Anda                |");
@@ -2005,8 +1923,10 @@ void pilih_golongan_prabayar(){
     printf("\n\t| (3) Industri                                                 |");
     printf("\n\t| (4) Fasilitas publik                                         |");
     printf("\n\t================================================================");
+    printf("\n\t| (0) Kembali ke pilih fitur                                   |");
+    printf("\n\t================================================================");
     printf("\n\t| Masukkan pilihan : ");
-    while(scanf("%d", &golongan)==0 || golongan<1 || golongan >4){
+    while(scanf("%d", &golongan)==0 || golongan<0 || golongan >4){
         printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
         printf("\n\tInputan harus berupa angka");
         printf("\n\t================================================================");
@@ -2024,10 +1944,13 @@ void pilih_golongan_prabayar(){
         industri_prabayar();
     }else if(golongan==4){
         fasilitas_publik_prabayar();
+    }else if (golongan == 0){
+        pilih_fitur();
     }
 }
 
 void rumah_tangga_prabayar(){
+    fflush(stdin);
     char dayalistrik[5] [32] = {"900 VA", "1.300 VA", "2.200 VA", "3.500 VA s.d. 5.500 VA", "6.600 VA ke atas"};
     char golongan[5] [10] = {"R-1/TR", "R-1/TR", "R-1/TR", "R-2/TR", "R-3/TR"};
     float dayalistrik_2[5] = {900, 1300, 2200, 5500, 6600};
@@ -2154,9 +2077,9 @@ void rumah_tangga_prabayar(){
     printf("\n\tGolongan Rumah Tangga : %s", golongan[(int)pilih_dayalistrik-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO Meteran                : %s", rekening);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tNO Token                  : ");
+    printf("\tNO Meteran                : %s", rekening);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tNO Token                  : ");
     //membangkitkan bilangan random untuk token listrik
     srand(time(NULL)); 
     for(int i=0; i<12; i++){ //looping sebanyak 12 kali
@@ -2172,6 +2095,7 @@ void rumah_tangga_prabayar(){
 }
 
 void bisnis_prabayar(){
+    fflush(stdin);
     char dayalistrik[2] [32] = {"6.600 VA s.d. 200 kVA", "Di atas 200 kVA"};
     char golongan[2] [10] = {"B-2/TR", "B-3/TM"};
     float dayalistrik_2[5] = {6600, 200000};
@@ -2277,9 +2201,9 @@ void bisnis_prabayar(){
     printf("\n\tGolongan Bisnis : %s", golongan[(int)pilih_dayalistrik-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO Meteran                : %s", rekening);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tNO Token                  : ");
+    printf("\tNO Meteran                : %s", rekening);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tNO Token                  : ");
     //membangkitkan bilangan random untuk token listrik
     srand(time(NULL)); 
     for(int i=0; i<12; i++){ //looping sebanyak 12 kali
@@ -2295,6 +2219,7 @@ void bisnis_prabayar(){
 }
 
 void industri_prabayar(){
+    fflush(stdin);
     char dayalistrik[2] [32] = {"Di atas 200 kVA", "30.000 kVA ke atas"};
     char golongan[2] [10] = {"I-3/TM", "I-4/TT"};
     float dayalistrik_2[5] = {200000, 30000000};
@@ -2351,6 +2276,7 @@ void industri_prabayar(){
         printf("\n\tMasukkan pemakaian bulan sebelumnya (kWh) : ");
         while(jumlah_bayar=getchar() != '\n');
     }
+
     close();
 
     printf("\n\t================================================================");
@@ -2398,9 +2324,9 @@ void industri_prabayar(){
     printf("\n\tGolongan Industri : %s", golongan[(int)pilih_dayalistrik-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO Meteran                : %s", rekening);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tNO Token                  : ");
+    printf("\tNO Meteran                : %s", rekening);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tNO Token                  : ");
     //membangkitkan bilangan random untuk token listrik
     srand(time(NULL)); 
     for(int i=0; i<12; i++){ //looping sebanyak 12 kali
@@ -2416,6 +2342,7 @@ void industri_prabayar(){
 }
 
 void fasilitas_publik_prabayar(){
+    fflush(stdin);
     char dayalistrik[3] [32] = {"6.600 VA s.d. 200 kVA", "Di atas 200 kVA", "Penerangan Jalan Umum"};
     char golongan[3] [10] = {"P-1/TR", "P-2/TM", "P-3/TR"};
     float dayalistrik_2[5] = {6600, 200000, 0};
@@ -2526,9 +2453,9 @@ void fasilitas_publik_prabayar(){
     printf("\n\tGolongan Fasilitas Publik : %s", golongan[(int)pilih_dayalistrik-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO Meteran                : %s", rekening);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tNO Token                  : ");
+    printf("\tNO Meteran                : %s", rekening);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tNO Token                  : ");
     //membangkitkan bilangan random untuk token listrik
     srand(time(NULL)); 
     for(int i=0; i<12; i++){ //looping sebanyak 12 kali
@@ -2544,6 +2471,7 @@ void fasilitas_publik_prabayar(){
 }
 
 void upgrade_daya_listrik(){
+    fflush(stdin);
     printf("\n\t================================================================");
     printf("\n\t|                Ketentuan Perubahan Daya/Migrasi              |");
     printf("\n\t----------------------------------------------------------------");
@@ -2565,8 +2493,10 @@ void upgrade_daya_listrik(){
     printf("\n\t| (5) 3500 VA                                                  |");
     printf("\n\t| (6) 4400 VA                                                  |");
     printf("\n\t================================================================");
+    printf("\n\t| (0) Kembali ke pilih fitur                                   |");
+    printf("\n\t================================================================");
     printf("\n\t| Masukkan pilihan : ");
-    while(scanf("%d", &golongan)==0 || golongan<1 || golongan >6){
+    while(scanf("%d", &golongan)==0 || golongan<0 || golongan >6){
         printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
         printf("\n\tInputan harus berupa angka");
         printf("\n\t================================================================");
@@ -2588,11 +2518,14 @@ void upgrade_daya_listrik(){
         daya_awal_3500();
     }else if(golongan==6){
         daya_awal_4400();
+    }else if (golongan == 0){
+        pilih_fitur();
     }
 
 }
 
 void daya_awal_450(){
+    fflush(stdin);
     int daya_upgrade[6] = {900, 1300, 2200, 3500, 4400, 5500};
     int pilih_daya_upgrade;
     float biaya_penyambungan;
@@ -2666,9 +2599,9 @@ void daya_awal_450(){
     printf("\n\tDaya Awal Anda : 450 VA ");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO Meteran / IDPEL        : %s", id_pelanggan);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+    printf("\tNO Meteran / IDPEL        : %s", id_pelanggan);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tDaya Baru Anda            : %d VA", daya_upgrade[pilih_daya_upgrade-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tJumlah Bayar Anda         = Rp.%.2f", biaya_penyambungan);
@@ -2677,6 +2610,7 @@ void daya_awal_450(){
 }
 
 void daya_awal_900(){
+    fflush(stdin);
     int daya_upgrade[5] = {1300, 2200, 3500, 4400, 5500};
     int pilih_daya_upgrade;
     float biaya_penyambungan;
@@ -2747,9 +2681,9 @@ void daya_awal_900(){
     printf("\n\tDaya Awal Anda : 900 VA ");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO Meteran / IDPEL        : %s", id_pelanggan);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+    printf("\tNO Meteran / IDPEL        : %s", id_pelanggan);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tDaya Baru Anda            : %d VA", daya_upgrade[pilih_daya_upgrade-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tJumlah Bayar Anda         = Rp.%.2f", biaya_penyambungan);
@@ -2758,6 +2692,7 @@ void daya_awal_900(){
 }
 
 void daya_awal_1300(){
+    fflush(stdin);
     int daya_upgrade[4] = {2200, 3500, 4400, 5500};
     int pilih_daya_upgrade;
     float biaya_penyambungan;
@@ -2770,7 +2705,7 @@ void daya_awal_1300(){
     struct tm tm = *localtime(&t);
 
     printf("\n\t+--------------------------------------------------------------+");
-    printf("\n\t| Daya Listrik Lama Anda : 1300 VA                              |");
+    printf("\n\t| Daya Listrik Lama Anda : 1300 VA                             |");
     printf("\n\t+--------------------------------------------------------------+");
     printf("\n\t|            Silahkan Pilih Daya Listrik Baru Anda             |");
     printf("\n\t+--------------------------------------------------------------+");
@@ -2825,9 +2760,9 @@ void daya_awal_1300(){
     printf("\n\tDaya Awal Anda : 1300 VA ");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO Meteran / IDPEL        : %s", id_pelanggan);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+    printf("\tNO Meteran / IDPEL        : %s", id_pelanggan);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tDaya Baru Anda            : %d VA", daya_upgrade[pilih_daya_upgrade-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tJumlah Bayar Anda         = Rp.%.2f", biaya_penyambungan);
@@ -2836,6 +2771,7 @@ void daya_awal_1300(){
 }
 
 void daya_awal_2200(){
+    fflush(stdin);
     int daya_upgrade[3] = {3500, 4400, 5500};
     int pilih_daya_upgrade;
     float biaya_penyambungan;
@@ -2848,7 +2784,7 @@ void daya_awal_2200(){
     struct tm tm = *localtime(&t);
 
     printf("\n\t+--------------------------------------------------------------+");
-    printf("\n\t| Daya Listrik Lama Anda : 2200 VA                              |");
+    printf("\n\t| Daya Listrik Lama Anda : 2200 VA                             |");
     printf("\n\t+--------------------------------------------------------------+");
     printf("\n\t|            Silahkan Pilih Daya Listrik Baru Anda             |");
     printf("\n\t+--------------------------------------------------------------+");
@@ -2900,9 +2836,9 @@ void daya_awal_2200(){
     printf("\n\tDaya Awal Anda : 2200 VA ");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO Meteran / IDPEL        : %s", id_pelanggan);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+    printf("\tNO Meteran / IDPEL        : %s", id_pelanggan);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tDaya Baru Anda            : %d VA", daya_upgrade[pilih_daya_upgrade-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tJumlah Bayar Anda         = Rp.%.2f", biaya_penyambungan);
@@ -2911,6 +2847,7 @@ void daya_awal_2200(){
 }
 
 void daya_awal_3500(){
+    fflush(stdin);
     int daya_upgrade[2] = {4400, 5500};
     int pilih_daya_upgrade;
     float biaya_penyambungan;
@@ -2923,7 +2860,7 @@ void daya_awal_3500(){
     struct tm tm = *localtime(&t);
 
     printf("\n\t+--------------------------------------------------------------+");
-    printf("\n\t| Daya Listrik Lama Anda : 3500 VA                              |");
+    printf("\n\t| Daya Listrik Lama Anda : 3500 VA                             |");
     printf("\n\t+--------------------------------------------------------------+");
     printf("\n\t|            Silahkan Pilih Daya Listrik Baru Anda             |");
     printf("\n\t+--------------------------------------------------------------+");
@@ -2972,9 +2909,9 @@ void daya_awal_3500(){
     printf("\n\tDaya Awal Anda : 3500 VA ");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO Meteran / IDPEL        : %s", id_pelanggan);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+    printf("\tNO Meteran / IDPEL        : %s", id_pelanggan);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tDaya Baru Anda            : %d VA", daya_upgrade[pilih_daya_upgrade-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tJumlah Bayar Anda         = Rp.%.2f", biaya_penyambungan);
@@ -2983,6 +2920,7 @@ void daya_awal_3500(){
 }
 
 void daya_awal_4400(){
+    fflush(stdin);
     int daya_upgrade[1] = {5500};
     int pilih_daya_upgrade;
     float biaya_penyambungan;
@@ -2995,7 +2933,7 @@ void daya_awal_4400(){
     struct tm tm = *localtime(&t);
 
     printf("\n\t+--------------------------------------------------------------+");
-    printf("\n\t| Daya Listrik Lama Anda : 4400 VA                              |");
+    printf("\n\t| Daya Listrik Lama Anda : 4400 VA                             |");
     printf("\n\t+--------------------------------------------------------------+");
     printf("\n\t|            Silahkan Pilih Daya Listrik Baru Anda             |");
     printf("\n\t+--------------------------------------------------------------+");
@@ -3017,15 +2955,15 @@ void daya_awal_4400(){
     printf("\n\t+--------------------------------------------------------------+");
     printf("\n\tMasukkan nama anda : ");
     fgets(nama, sizeof(nama), stdin);
-    // scanf("%[^\n]s", &nama);
-
+    //scanf("%[^\n]", &nama);
+    
     printf("\n\tMasukkan NO REK ID Pelanggan : ");
-    //scanf("%[^\n]s", &rekening);
+    //scanf("%[^\n]", &id_pelanggan);
     fgets(id_pelanggan, sizeof(id_pelanggan), stdin);
-
+    
     printf("\n\tMasukkan alamat anda : ");
     fgets(alamat, sizeof(alamat), stdin);
-    // scanf("%[^\n]s", &alamat);
+    //scanf("%[^\n]", &alamat);
 
     close();
 
@@ -3041,9 +2979,9 @@ void daya_awal_4400(){
     printf("\n\tDaya Awal Anda : 4400 VA ");
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tNama                      : %s", nama);
-    printf("\n\tNO Meteran / IDPEL        : %s", id_pelanggan);
-    printf("\n\tAlamat                    : %s", alamat);
-    printf("\n\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+    printf("\tNO Meteran / IDPEL        : %s", id_pelanggan);
+    printf("\tAlamat                    : %s", alamat);
+    printf("\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
     printf("\n\tDaya Baru Anda            : %d VA", daya_upgrade[pilih_daya_upgrade-1]);
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tJumlah Bayar Anda         = Rp.%.2f", biaya_penyambungan);
@@ -3052,15 +2990,14 @@ void daya_awal_4400(){
 }
 
 int main(){
+    login();
     logopln();
-    printf("\n\tTekan enter untuk melanjutkan");
-    getchar();
-    system("clear");
     pilih_fitur();
     ulang();
 }
 
 void logopln(){
+    system("clear");
     char buff[255];
     FILE *fptr;
 
@@ -3078,6 +3015,8 @@ void logopln(){
 
     // tutup file
     fclose(fptr);
+
+    close();
 }
 
 void cetak_rumah_tangga(char golongan[5] [10], float pilih_dayalistrik, char nama[128], char rekening[20], char alamat[128], int tanggal, int bulan, int tahun, char dayalistrik[5] [32], float pemakaian, float rumus_denda, float rumus_rekening, float rumus_rekening_total ){
@@ -3114,7 +3053,7 @@ void cetak_rumah_tangga(char golongan[5] [10], float pilih_dayalistrik, char nam
         fprintf(fptr, "\n\tBiaya denda                   = Rp.%.2f", rumus_denda);
         fprintf(fptr, "\n\tBiaya pemakaian listrik(kWh)  = Rp.%.2f", rumus_rekening);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        fprintf(fptr, "\n\tjumlah tagihan anda           = Rp.%.2f", rumus_rekening_total);
+        fprintf(fptr, "\n\tjumlah tagihan anda           = Rp.%.2f\n\n", rumus_rekening_total);
 
         fclose(fptr);//tutup file
 
@@ -3147,9 +3086,9 @@ void cetak_bisnis(char golongan[2] [10], float pilih_dayalistrik, char nama[128]
         fprintf(fptr, "\n\tGolongan Bisnis : %s", golongan[(int)pilih_dayalistrik-1]);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         fprintf(fptr, "\n\tNama                      : %s", nama);
-        fprintf(fptr, "\n\tNO REK ID Pelanggan       : %s", rekening);
-        fprintf(fptr, "\n\tAlamat                    : %s", alamat);
-        fprintf(fptr, "\n\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
+        fprintf(fptr, "\tNO REK ID Pelanggan       : %s", rekening);
+        fprintf(fptr, "\tAlamat                    : %s", alamat);
+        fprintf(fptr, "\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
         fprintf(fptr, "\n\tTanggal pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
         fprintf(fptr, "\n\tSumber Daya Listrik Digunakan           = %s", dayalistrik[(int)pilih_dayalistrik-1]);
         if(pilih_dayalistrik==1){
@@ -3165,7 +3104,7 @@ void cetak_bisnis(char golongan[2] [10], float pilih_dayalistrik, char nama[128]
         fprintf(fptr, "\n\tBiaya Pajak Penerangan Jalan            = Rp.%.2f", ppj);
         fprintf(fptr, "\n\tBiaya pemakaian listrik(kWh)            = Rp.%.2f", rumus_rekening);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        fprintf(fptr, "\n\tjumlah tagihan anda                     = Rp.%.2f", rumus_rekening_total);
+        fprintf(fptr, "\n\tjumlah tagihan anda                     = Rp.%.2f\n\n", rumus_rekening_total);
 
         fclose(fptr);//tutup file
 
@@ -3198,9 +3137,9 @@ void cetak_industri(char golongan[2] [10], float pilih_dayalistrik, char nama[12
         fprintf(fptr,"\n\tGolongan Industri : %s", golongan[(int)pilih_dayalistrik-1]);
         fprintf(fptr,"\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         fprintf(fptr,"\n\tNama                      : %s", nama);
-        fprintf(fptr,"\n\tNO REK ID Pelanggan       : %s", rekening);
-        fprintf(fptr,"\n\tAlamat                    : %s", alamat);
-        fprintf(fptr,"\n\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
+        fprintf(fptr,"\tNO REK ID Pelanggan       : %s", rekening);
+        fprintf(fptr,"\tAlamat                    : %s", alamat);
+        fprintf(fptr,"\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
         fprintf(fptr,"\n\tTanggal pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
         fprintf(fptr,"\n\tSumber Daya Listrik Digunakan           = %s", dayalistrik[(int)pilih_dayalistrik-1]);
         fprintf(fptr,"\n\tPemakaian anda bulan ini                = %.2f (kWh)", pemakaian);
@@ -3213,7 +3152,7 @@ void cetak_industri(char golongan[2] [10], float pilih_dayalistrik, char nama[12
         fprintf(fptr,"\n\tBiaya denda                             = Rp.%.2f", rumus_denda);
         fprintf(fptr,"\n\tBiaya pemakaian listrik(kWh)            = Rp.%.2f", rumus_rekening);
         fprintf(fptr,"\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        fprintf(fptr,"\n\tjumlah tagihan anda                     = Rp.%.2f", rumus_rekening_total);
+        fprintf(fptr,"\n\tjumlah tagihan anda                     = Rp.%.2f\n\n", rumus_rekening_total);
 
         fclose(fptr);//tutup file
 
@@ -3246,9 +3185,9 @@ void cetak_fasilitas_publik(char golongan[3] [10], float pilih_dayalistrik, char
         printf("\n\tGolongan Fasilitas Publik : %s", golongan[(int)pilih_dayalistrik-1]);
         printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         printf("\n\tNama                      : %s", nama);
-        printf("\n\tNO REK ID Pelanggan       : %s", rekening);
-        printf("\n\tAlamat                    : %s", alamat);
-        printf("\n\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
+        printf("\tNO REK ID Pelanggan       : %s", rekening);
+        printf("\tAlamat                    : %s", alamat);
+        printf("\tTanggal Tagihan Diberikan : %d-%d-%d", tanggal, bulan, tahun);
         printf("\n\tTanggal pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
         printf("\n\tSumber Daya Listrik Digunakan           = %s", dayalistrik[(int)pilih_dayalistrik-1]);
         if(pilih_dayalistrik==1){
@@ -3266,7 +3205,7 @@ void cetak_fasilitas_publik(char golongan[3] [10], float pilih_dayalistrik, char
         printf("\n\tBiaya Pajak Penerangan Jalan            = Rp.%.2f", ppj);
         printf("\n\tBiaya pemakaian listrik(kWh)            = Rp.%.2f", rumus_rekening);
         printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        printf("\n\tjumlah tagihan anda                     = Rp.%.2f", rumus_rekening_total);
+        printf("\n\tjumlah tagihan anda                     = Rp.%.2f\n\n", rumus_rekening_total);
 
         fclose(fptr);//tutup file
 
@@ -3299,9 +3238,9 @@ void cetak_rumah_tangga_prabayar(char golongan[5] [10], float pilih_dayalistrik,
         fprintf(fptr, "\n\tGolongan Rumah Tangga : %s", golongan[(int)pilih_dayalistrik-1]);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         fprintf(fptr, "\n\tNama                      : %s", nama);
-        fprintf(fptr, "\n\tNO Meteran                : %s", rekening);
-        fprintf(fptr, "\n\tAlamat                    : %s", alamat);
-        fprintf(fptr, "\n\tNO Token                  : ");
+        fprintf(fptr, "\tNO Meteran                : %s", rekening);
+        fprintf(fptr, "\tAlamat                    : %s", alamat);
+        fprintf(fptr, "\tNO Token                  : ");
         //membangkitkan bilangan random untuk token listrik
         srand(time(NULL)); 
         for(int i=0; i<12; i++){ //looping sebanyak 12 kali
@@ -3312,7 +3251,7 @@ void cetak_rumah_tangga_prabayar(char golongan[5] [10], float pilih_dayalistrik,
         fprintf(fptr, "\n\tSumber Daya Listrik Digunakan  = %s", dayalistrik[(int)pilih_dayalistrik-1]);
         fprintf(fptr, "\n\tJumlah Bayar Anda              = Rp.%.2f", jumlah_bayar);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        fprintf(fptr, "\n\tjumlah Daya Yang Didapat (kWh) = %.2f", rumus_rekening_total);
+        fprintf(fptr, "\n\tjumlah Daya Yang Didapat (kWh) = %.2f\n\n", rumus_rekening_total);
 
         fclose(fptr);//tutup file
 
@@ -3345,9 +3284,9 @@ void cetak_bisnis_prabayar(char golongan[2] [10], float pilih_dayalistrik, char 
         fprintf(fptr, "\n\tGolongan Bisnis : %s", golongan[(int)pilih_dayalistrik-1]);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         fprintf(fptr, "\n\tNama                      : %s", nama);
-        fprintf(fptr, "\n\tNO Meteran                : %s", rekening);
-        fprintf(fptr, "\n\tAlamat                    : %s", alamat);
-        fprintf(fptr, "\n\tNO Token                  : ");
+        fprintf(fptr, "\tNO Meteran                : %s", rekening);
+        fprintf(fptr, "\tAlamat                    : %s", alamat);
+        fprintf(fptr, "\tNO Token                  : ");
         //membangkitkan bilangan random untuk token listrik
         srand(time(NULL)); 
         for(int i=0; i<12; i++){ //looping sebanyak 12 kali
@@ -3358,7 +3297,7 @@ void cetak_bisnis_prabayar(char golongan[2] [10], float pilih_dayalistrik, char 
         fprintf(fptr, "\n\tSumber Daya Listrik Digunakan   = %s", dayalistrik[(int)pilih_dayalistrik-1]);
         fprintf(fptr, "\n\tJumlah Bayar Anda               = Rp.%.2f", jumlah_bayar);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        fprintf(fptr, "\n\tjumlah Daya Yang Didapat (kWh)  = %.2f", rumus_rekening_total);
+        fprintf(fptr, "\n\tjumlah Daya Yang Didapat (kWh)  = %.2f\n\n", rumus_rekening_total);
 
         fclose(fptr);//tutup file
 
@@ -3391,9 +3330,9 @@ void cetak_industri_prabayar(char golongan[2] [10], float pilih_dayalistrik, cha
         printf("\n\tGolongan Industri : %s", golongan[(int)pilih_dayalistrik-1]);
         printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         printf("\n\tNama                      : %s", nama);
-        printf("\n\tNO Meteran                : %s", rekening);
-        printf("\n\tAlamat                    : %s", alamat);
-        printf("\n\tNO Token                  : ");
+        printf("\tNO Meteran                : %s", rekening);
+        printf("\tAlamat                    : %s", alamat);
+        printf("\tNO Token                  : ");
         //membangkitkan bilangan random untuk token listrik
         srand(time(NULL)); 
         for(int i=0; i<12; i++){ //looping sebanyak 12 kali
@@ -3404,7 +3343,7 @@ void cetak_industri_prabayar(char golongan[2] [10], float pilih_dayalistrik, cha
         printf("\n\tSumber Daya Listrik Digunakan   = %s", dayalistrik[(int)pilih_dayalistrik-1]);
         printf("\n\tJumlah Bayar Anda               = Rp.%.2f", jumlah_bayar);
         printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        printf("\n\tjumlah Daya Yang Didapat (kWh)  = %.2f", rumus_rekening_total);
+        printf("\n\tjumlah Daya Yang Didapat (kWh)  = %.2f\n\n", rumus_rekening_total);
 
         fclose(fptr);//tutup file
 
@@ -3437,9 +3376,9 @@ void cetak_fasilitas_publik_prabayar(char golongan[3] [10], float pilih_dayalist
         fprintf(fptr, "\n\tGolongan Fasilitas Publik : %s", golongan[(int)pilih_dayalistrik-1]);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         fprintf(fptr, "\n\tNama                      : %s", nama);
-        fprintf(fptr, "\n\tNO Meteran                : %s", rekening);
-        fprintf(fptr, "\n\tAlamat                    : %s", alamat);
-        fprintf(fptr, "\n\tNO Token                  : ");
+        fprintf(fptr, "\tNO Meteran                : %s", rekening);
+        fprintf(fptr, "\tAlamat                    : %s", alamat);
+        fprintf(fptr, "\tNO Token                  : ");
         //membangkitkan bilangan random untuk token listrik
         srand(time(NULL)); 
         for(int i=0; i<12; i++){ //looping sebanyak 12 kali
@@ -3450,7 +3389,7 @@ void cetak_fasilitas_publik_prabayar(char golongan[3] [10], float pilih_dayalist
         fprintf(fptr, "\n\tSumber Daya Listrik Digunakan   = %s", dayalistrik[(int)pilih_dayalistrik-1]);
         fprintf(fptr, "\n\tJumlah Bayar Anda               = Rp.%.2f", jumlah_bayar);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        fprintf(fptr, "\n\tjumlah Daya Yang Didapat (kWh)  = %.2f", rumus_rekening_total);
+        fprintf(fptr, "\n\tjumlah Daya Yang Didapat (kWh)  = %.2f\n\n", rumus_rekening_total);
 
         fclose(fptr);//tutup file
 
@@ -3483,12 +3422,12 @@ void cetak_daya_awal_450(int daya_upgrade[6], int pilih_daya_upgrade, char nama[
         fprintf(fptr, "\n\tDaya Awal Anda : 450 VA ");
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         fprintf(fptr, "\n\tNama                      : %s", nama);
-        fprintf(fptr, "\n\tNO Meteran / IDPEL        : %s", id_pelanggan);
-        fprintf(fptr, "\n\tAlamat                    : %s", alamat);
-        fprintf(fptr, "\n\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+        fprintf(fptr, "\tNO Meteran / IDPEL        : %s", id_pelanggan);
+        fprintf(fptr, "\tAlamat                    : %s", alamat);
+        fprintf(fptr, "\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
         fprintf(fptr, "\n\tDaya Baru Anda            : %d VA", daya_upgrade[pilih_daya_upgrade-1]);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        fprintf(fptr, "\n\tJumlah Bayar Anda         = Rp.%.2f", biaya_penyambungan);
+        fprintf(fptr, "\n\tJumlah Bayar Anda         = Rp.%.2f\n\n", biaya_penyambungan);
 
         fclose(fptr);//tutup file
 
@@ -3521,12 +3460,12 @@ void cetak_daya_awal_900(int daya_upgrade[5], int pilih_daya_upgrade, char nama[
         fprintf(fptr, "\n\tDaya Awal Anda : 900 VA ");
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         fprintf(fptr, "\n\tNama                      : %s", nama);
-        fprintf(fptr, "\n\tNO Meteran / IDPEL        : %s", id_pelanggan);
-        fprintf(fptr, "\n\tAlamat                    : %s", alamat);
-        fprintf(fptr, "\n\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+        fprintf(fptr, "\tNO Meteran / IDPEL        : %s", id_pelanggan);
+        fprintf(fptr, "\tAlamat                    : %s", alamat);
+        fprintf(fptr, "\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
         fprintf(fptr, "\n\tDaya Baru Anda            : %d VA", daya_upgrade[pilih_daya_upgrade-1]);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        fprintf(fptr, "\n\tJumlah Bayar Anda         = Rp.%.2f", biaya_penyambungan);
+        fprintf(fptr, "\n\tJumlah Bayar Anda         = Rp.%.2f\n\n", biaya_penyambungan);
 
         fclose(fptr);//tutup file
 
@@ -3559,12 +3498,12 @@ void cetak_daya_awal_1300(int daya_upgrade[4], int pilih_daya_upgrade, char nama
         fprintf(fptr, "\n\tDaya Awal Anda : 1300 VA ");
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         fprintf(fptr, "\n\tNama                      : %s", nama);
-        fprintf(fptr, "\n\tNO Meteran / IDPEL        : %s", id_pelanggan);
-        fprintf(fptr, "\n\tAlamat                    : %s", alamat);
-        fprintf(fptr, "\n\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+        fprintf(fptr, "\tNO Meteran / IDPEL        : %s", id_pelanggan);
+        fprintf(fptr, "\tAlamat                    : %s", alamat);
+        fprintf(fptr, "\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
         fprintf(fptr, "\n\tDaya Baru Anda            : %d VA", daya_upgrade[pilih_daya_upgrade-1]);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        fprintf(fptr, "\n\tJumlah Bayar Anda         = Rp.%.2f", biaya_penyambungan);
+        fprintf(fptr, "\n\tJumlah Bayar Anda         = Rp.%.2f\n\n", biaya_penyambungan);
 
         fclose(fptr);//tutup file
 
@@ -3597,12 +3536,12 @@ void cetak_daya_awal_2200(int daya_upgrade[3], int pilih_daya_upgrade, char nama
         fprintf(fptr, "\n\tDaya Awal Anda : 2200 VA ");
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         fprintf(fptr, "\n\tNama                      : %s", nama);
-        fprintf(fptr, "\n\tNO Meteran / IDPEL        : %s", id_pelanggan);
-        fprintf(fptr, "\n\tAlamat                    : %s", alamat);
-        fprintf(fptr, "\n\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+        fprintf(fptr, "\tNO Meteran / IDPEL        : %s", id_pelanggan);
+        fprintf(fptr, "\tAlamat                    : %s", alamat);
+        fprintf(fptr, "\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
         fprintf(fptr, "\n\tDaya Baru Anda            : %d VA", daya_upgrade[pilih_daya_upgrade-1]);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        fprintf(fptr, "\n\tJumlah Bayar Anda         = Rp.%.2f", biaya_penyambungan);
+        fprintf(fptr, "\n\tJumlah Bayar Anda         = Rp.%.2f\n\n", biaya_penyambungan);
 
         fclose(fptr);//tutup file
 
@@ -3635,12 +3574,12 @@ void cetak_daya_awal_3500(int daya_upgrade[2], int pilih_daya_upgrade, char nama
         fprintf(fptr, "\n\tDaya Awal Anda : 450 VA ");
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         fprintf(fptr, "\n\tNama                      : %s", nama);
-        fprintf(fptr, "\n\tNO Meteran / IDPEL        : %s", id_pelanggan);
-        fprintf(fptr, "\n\tAlamat                    : %s", alamat);
-        fprintf(fptr, "\n\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+        fprintf(fptr, "\tNO Meteran / IDPEL        : %s", id_pelanggan);
+        fprintf(fptr, "\tAlamat                    : %s", alamat);
+        fprintf(fptr, "\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
         fprintf(fptr, "\n\tDaya Baru Anda            : %d VA", daya_upgrade[pilih_daya_upgrade-1]);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        fprintf(fptr, "\n\tJumlah Bayar Anda         = Rp.%.2f", biaya_penyambungan);
+        fprintf(fptr, "\n\tJumlah Bayar Anda         = Rp.%.2f\n\n", biaya_penyambungan);
 
         fclose(fptr);//tutup file
 
@@ -3673,15 +3612,113 @@ void cetak_daya_awal_4400(int daya_upgrade[1], int pilih_daya_upgrade, char nama
         fprintf(fptr, "\n\tDaya Awal Anda : 4400 VA ");
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
         fprintf(fptr, "\n\tNama                      : %s", nama);
-        fprintf(fptr, "\n\tNO Meteran / IDPEL        : %s", id_pelanggan);
-        fprintf(fptr, "\n\tAlamat                    : %s", alamat);
-        fprintf(fptr, "\n\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
+        fprintf(fptr, "\tNO Meteran / IDPEL        : %s", id_pelanggan);
+        fprintf(fptr, "\tAlamat                    : %s", alamat);
+        fprintf(fptr, "\tTanggal Pembayaran        : %d-%02d-%02d %02d:%02d:%02d", tm.tm_mday, tm.tm_mon + 1, tm.tm_year + 1900);
         fprintf(fptr, "\n\tDaya Baru Anda            : %d VA", daya_upgrade[pilih_daya_upgrade-1]);
         fprintf(fptr, "\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        fprintf(fptr, "\n\tJumlah Bayar Anda         = Rp.%.2f", biaya_penyambungan);
+        fprintf(fptr, "\n\tJumlah Bayar Anda         = Rp.%.2f\n\n", biaya_penyambungan);
 
         fclose(fptr);//tutup file
 
         printf("\n\n\n\tPembayaran telah berhasil dicetak!!!\n");
         close();
+}
+
+void data_transaksi_pelanggan(){
+    fflush(stdin);
+    int pilih;
+    printf("\n\t================================================================");
+    printf("\n\t|                 Silahkan Pilih Transaksi Pelanggan           |");
+    printf("\n\t================================================================");
+    printf("\n\t| (1) Menaikkan Daya Listrik                                   |");
+    printf("\n\t| (2) Tagihan Listrik Pascabayar                               |");
+    printf("\n\t| (3) Tagihan Listrik Prabayar                                 |");
+    printf("\n\t================================================================");
+    printf("\n\t| (0) Kembali ke pilih fitur                                   |");
+    printf("\n\t================================================================");
+    printf("\n\t| Masukkan pilihan : ");
+    while(scanf("%d", &pilih)==0 || pilih<0 || pilih >3){
+        printf("\n\tKarakter yang anda inputkan salah, silahkan ulangi");
+        printf("\n\tInputan harus berupa angka");
+        printf("\n\t================================================================");
+        printf("\n\t| Masukkan pilihan : ");
+        while( pilih = getchar() != '\n');
+    }
+
+    close();
+
+    if(pilih==1){
+        lihat_ubah_daya();
+    }else if(pilih==2){
+        lihat_tagihan_pascabayar();
+    }else if(pilih==3){
+        lihat_tagihan_prabayar();
+    }else if(pilih==0){
+        pilih_fitur();
+    }
+
+}
+
+void lihat_ubah_daya(){
+    char buff[255];
+    FILE *fptr;
+
+    // membuka file
+    if ((fptr = fopen("tagihan_ubah_daya.txt","r")) == NULL){
+        printf("Error: File tidak ada!");
+        // Tutup program karena file gak ada.
+        exit(1);
+    }
+
+    // baca isi file dengan gets lalu simpan ke buff
+    while(fgets(buff, sizeof(buff), fptr)){
+        printf("%s", buff);
+    }
+
+    // tutup file
+    fclose(fptr);
+    close();
+}
+
+void lihat_tagihan_pascabayar(){
+    char buff[255];
+    FILE *fptr;
+
+    // membuka file
+    if ((fptr = fopen("tagihan_listrik_pascabayar.txt","r")) == NULL){
+        printf("Error: File tidak ada!");
+        // Tutup program karena file gak ada.
+        exit(1);
+    }
+
+    // baca isi file dengan gets lalu simpan ke buff
+    while(fgets(buff, sizeof(buff), fptr)){
+        printf("%s", buff);
+    }
+
+    // tutup file
+    fclose(fptr);
+    close();
+}
+
+void lihat_tagihan_prabayar(){
+    char buff[255];
+    FILE *fptr;
+
+    // membuka file
+    if ((fptr = fopen("tagihan_listrik_prabayar.txt","r")) == NULL){
+        printf("Error: File tidak ada!");
+        // Tutup program karena file gak ada.
+        exit(1);
+    }
+
+    // baca isi file dengan gets lalu simpan ke buff
+    while(fgets(buff, sizeof(buff), fptr)){
+        printf("%s", buff);
+    }
+
+    // tutup file
+    fclose(fptr);
+    close();
 }
