@@ -8,3 +8,4 @@ Program ini memiliki berbagai fitur seperti :
 1. Menaikkan Daya Listrik 
 2. Menghitung Tagihan Listrik Pascabayar 
 3. Menghitung Tagihan Listrik Prabayar 
+4. Melihat Data Transaksi Pelanggan
