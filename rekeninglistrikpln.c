@@ -12,6 +12,10 @@ void pilih_fitur();
 void logopln();
 void namakelompok();
 
+//fungsi fungsi untuk sistem login
+void login();
+void ulang_login();
+
 // fungsi fungsi golongan pascabayar
 void pilih_golongan_pascabayar();
 void rumah_tangga();
@@ -61,9 +65,6 @@ void lihat_ubah_daya();
 void lihat_tagihan_pascabayar();
 void lihat_tagihan_prabayar();
 
-//fungsi fungsi untuk sistem login
-void login();
-void ulang_login();
 
 //membuat struct untuk daftar pegawai
 struct pegawai {
@@ -2065,13 +2066,6 @@ void rumah_tangga_prabayar(){
     else if(pilih_dayalistrik==5 && dayalistrik_2[(int)pilih_dayalistrik-1]==6600){
         rumus_rekening_total = (jumlah_bayar - ppj) / 1699.53;
     }
-
-    //membangkitkan bilangan random
-    srand(time(NULL));
-    for(int i=0; i<12; i++){ //looping sebanyak 12 kali
-        token = rand() % 12 + 1; // *Scaling
-    }
-
 
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\t||                        Perusahaan Listrik Negara                        ||");
