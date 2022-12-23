@@ -198,7 +198,6 @@ void penutup(){
     // tutup file
     fclose(fptr);
 
-    close();
 }
 
 void pilih_fitur(){
