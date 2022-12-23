@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <windows.h> // untuk memanipulasi semua hal tentang windows
+#include <conio.h>
 
 void close();
 void ulang();
@@ -10,6 +10,7 @@ void penutup ();
 int main();
 void pilih_fitur();
 void logopln();
+void namakelompok();
 
 // fungsi fungsi golongan pascabayar
 void pilih_golongan_pascabayar();
@@ -63,28 +64,18 @@ void lihat_tagihan_prabayar();
 //fungsi fungsi untuk sistem login
 void login();
 void ulang_login();
-// void gotoxy(int x, int y);
 
-//LWBP = Luar Waktu Beban Puncak (22.00 s.d. 18.00)
-//WBP = Waktu Beban Puncak (18.00 s.d. 22.00)
-
+//membuat struct untuk daftar pegawai
 struct pegawai {
     char username[16];
     char password[10];
 };
 
-struct pegawai pegawai1 = {"Sandy", "resandy35"};
+struct pegawai pegawai1 = {"Sandy", "resandy35"}; //mengisi struct untuk mendaftarkan pegawai pada sistem login
 
-struct pegawai pegawai2 = {"Abdy", "arysada11"};
+struct pegawai pegawai2 = {"Abdy", "arysada11"}; //mengisi struct untuk mendaftarkan pegawai pada sistem login
 
-struct pegawai pegawaisaatini;
-
-// void gotoxy(int x, int y){
-//     COORD coord = {0, 0}; //struk koordinat
-//     coord.X = x;
-//     coord.Y = y;
-//     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord); // baris untuk memanipulasi posisi cursor
-// }
+struct pegawai pegawaisaatini; //variabel untuk menampung nilai kemudian akan dibandingkan dengan struct yang sudah terdaftar pada sistem login
 
 void login(){
     system("clear");
@@ -93,31 +84,30 @@ void login(){
     printf("\n\t================================================================");
     printf("\n\tMasukkan Username : ");
     scanf("%s", &pegawaisaatini.username);
+    fflush(stdin);
     printf("\n\tMasukkan Password : ");
-    scanf("%s", &pegawaisaatini.password);
-    // char ch;
-    // char i =0;
-    // int x = 20; // simpan panjang karakter "Masukkan Password : " karena akan dimanipulasi di koordinat x
-    // while ((ch = getchar()) != 13){//((ch= (char) _getc_r()) != '\r'){
-    //     if(ch == 8){ // dalam bilangan ASCII backspace desimal = 8
-    //         pegawaisaatini.password[i] = '\0';
-    //         gotoxy(x-1, 1);
-    //         printf(" "); // kita akan replace dengan spasi
-    //         x--;
-    //         i--;
-    //         gotoxy(x, 1);
-    //     }
-    //     else{
-    //     pegawaisaatini.password[i] = ch;
-    //     gotoxy(x, 1);
-    //     printf("*");
-    //     x++;
-    //     i++;
-    //     }
-    // }
+    char ch;
+    char i = 0;
+    while (1){ // (1) artinya bernilai true terus
+        ch = getch();
+        if(ch == 13){ //kondisi untuk memberhintikan perulangan
+            pegawaisaatini.password[i+1] = '\0';
+            break;
+        }
+        if(ch == 8){ // dalam bilangan ASCII backspace desimal = 8
+            pegawaisaatini.password[i] = '\0';
+            printf("\b \b"); // fungsi \b untuk backspace
+            i--;
+        }
+        else{
+        pegawaisaatini.password[i] = ch;
+        printf("*");
+        i++;
+        }
+    }
 
-    // printf("\n");
-    
+    printf("\n");
+
     close();
 
     if ((strcmp (pegawaisaatini.username, pegawai1.username) ==0) && (strcmp (pegawaisaatini.password, pegawai1.password)==0)){
@@ -144,6 +134,7 @@ void login(){
         close();
         ulang_login();
     }
+    
 
 }
 
@@ -187,13 +178,27 @@ void ulang(){
     }
 }
 
-void penutup (){
-    printf ("\n\t========================================================");
-    printf ("\n\t||    Terima kasih telah menggunakan layanan kami     ||");
-    printf ("\n\t||              Salam Hangat Dari Kami                ||");
-    printf ("\n\t========================================================");
-    printf ("\n\t||             Perusahaan Listrik Negara              ||");
-    printf ("\n\t========================================================");
+void penutup(){
+    system("clear");
+    char buff[255];
+    FILE *fptr;
+
+    // membuka file
+    if ((fptr = fopen("logo pln penutup.txt","r")) == NULL){
+        printf("Error: File tidak ada!");
+        // Tutup program karena file gak ada.
+        exit(1);
+    }
+
+    // baca isi file dengan gets lalu simpan ke buff
+    while(fgets(buff, sizeof(buff), fptr)){
+        printf("%s", buff);
+    }
+
+    // tutup file
+    fclose(fptr);
+
+    close();
 }
 
 void pilih_fitur(){
@@ -251,7 +256,7 @@ void pilih_golongan_pascabayar(){
         printf("\n\t| Masukkan pilihan : ");
         while( golongan = getchar() != '\n');
     }
-    
+
     close();
 
     if(golongan==1){
@@ -305,7 +310,7 @@ void rumah_tangga(){
         while(pilih_dayalistrik=getchar() != '\n');
     }
 
-    
+
     close();
 
     printf("\n\t================================================================");
@@ -343,8 +348,8 @@ void rumah_tangga(){
 
     pemakaian = pemakaianbulanini - pemakaianbulanlalu;
 
-    //pilih_dayalistrik = pilih_dayalistrik-1; 
-   
+    //pilih_dayalistrik = pilih_dayalistrik-1;
+
     close();
 
     printf("\n\t================================================================");
@@ -649,7 +654,7 @@ void rumah_tangga(){
         rumus_rekening_total = rumus_rekening + rumus_denda;
     }
 
- 
+
     close();
 
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
@@ -722,7 +727,7 @@ void bisnis(){
         while(pilih_dayalistrik=getchar() != '\n');
     }
 
-    
+
     close();
 
     printf("\n\t================================================================");
@@ -842,7 +847,7 @@ void bisnis(){
         rumus_kVArh = 0;
     }
 
-   
+
     close();
 
     printf("\n\t================================================================");
@@ -873,7 +878,7 @@ void bisnis(){
         while( tahun = getchar()!= '\n');
     }
 
-    
+
     close();
 
     float rumus_rekening;
@@ -1252,7 +1257,7 @@ void industri(){
     }else if(pilih_kVArh==0){
         rumus_kVArh = 0;
     }
-    
+
     close();
 
     printf("\n\t================================================================");
@@ -1803,14 +1808,14 @@ void fasilitas_publik(){
     else if (pilih_dayalistrik==2 && tanggal <= 20 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Tidak Terkena Denda
         rumus_denda = 0;
         rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh) ;
-        
+
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 && tanggal > 20 && tanggal <=31 && bulan == tm.tm_mon + 1 && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 1, di tahun yang sama
         rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
-        
+
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1822,7 +1827,7 @@ void fasilitas_publik(){
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 2, di tahun yang sama
         rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
-        
+
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1834,7 +1839,7 @@ void fasilitas_publik(){
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon -1 && tahun == tm.tm_year + 1900){ // Terkena Denda Biaya Keterlambatan 3, di tahun yang sama
         rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
-        
+
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1846,7 +1851,7 @@ void fasilitas_publik(){
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon  && tahun == tm.tm_year + 1899){  // Terkena Denda Biaya Keterlambatan 2, di tahun yang beda
         rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
-        
+
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1858,7 +1863,7 @@ void fasilitas_publik(){
         rumus_rekening_total = rumus_rekening  + rumus_denda;
     }else if(pilih_dayalistrik==2 && dayalistrik_2[(int)pilih_dayalistrik-1]==200000 &&  bulan == tm.tm_mon -1 && tahun == tm.tm_year + 1899){ // Terkena Denda Biaya Keterlambatan 3, di tahun yang beda
         rumus_rekening = (rumus_lwbp + rumus_wbp) + ppj + (rumus_kVArh);
-        
+
         if (pemakaian2 <= 8000){
             rumus_rekening = 40 * (dayalistrik_2[(int)pilih_dayalistrik-1]*0.001) * (lwbp);
         }
@@ -1909,7 +1914,7 @@ void fasilitas_publik(){
     printf("\n\t~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
     printf("\n\tjumlah tagihan anda                     = Rp.%.2f", rumus_rekening_total);
     cetak_fasilitas_publik( golongan,  pilih_dayalistrik,  nama,  rekening,  alamat,  tanggal,  bulan,  tahun,  pemakaian1,  pemakaian2,  rumus_kVArh,  k,  dayalistrik,  rumus_wbp,  rumus_lwbp,  rumus_denda,  rumus_rekening,  rumus_rekening_total,  ppj );
-    
+
 }
 
 void pilih_golongan_prabayar(){
@@ -2027,7 +2032,7 @@ void rumah_tangga_prabayar(){
         printf("\n\tMasukkan pilihan : ");
         while(input_pilihan_ppj=getchar() != '\n');
     }
-    
+
     if (input_pilihan_ppj==1){
         ppj = 0.05 * jumlah_bayar;
     }else if (input_pilihan_ppj==2){
@@ -2037,7 +2042,7 @@ void rumah_tangga_prabayar(){
     }else if (input_pilihan_ppj==4){
         ppj = 0.1 * jumlah_bayar;
     }
-    
+
     close();
 
     float rumus_rekening_total;
@@ -2063,7 +2068,7 @@ void rumah_tangga_prabayar(){
     }
 
     //membangkitkan bilangan random
-    srand(time(NULL)); 
+    srand(time(NULL));
     for(int i=0; i<12; i++){ //looping sebanyak 12 kali
         token = rand() % 12 + 1; // *Scaling
     }
@@ -2081,7 +2086,7 @@ void rumah_tangga_prabayar(){
     printf("\tAlamat                    : %s", alamat);
     printf("\tNO Token                  : ");
     //membangkitkan bilangan random untuk token listrik
-    srand(time(NULL)); 
+    srand(time(NULL));
     for(int i=0; i<12; i++){ //looping sebanyak 12 kali
         token = rand() % 9 + 1; // *Scaling
         printf("%d", token);
@@ -2169,7 +2174,7 @@ void bisnis_prabayar(){
         printf("\n\tMasukkan pilihan : ");
         while(input_pilihan_ppj=getchar() != '\n');
     }
-    
+
     if (input_pilihan_ppj==1){
         ppj = 0.05 * jumlah_bayar;
     }else if (input_pilihan_ppj==2){
@@ -2205,7 +2210,7 @@ void bisnis_prabayar(){
     printf("\tAlamat                    : %s", alamat);
     printf("\tNO Token                  : ");
     //membangkitkan bilangan random untuk token listrik
-    srand(time(NULL)); 
+    srand(time(NULL));
     for(int i=0; i<12; i++){ //looping sebanyak 12 kali
         token = rand() % 9 + 1; // *Scaling
         printf("%d", token);
@@ -2295,7 +2300,7 @@ void industri_prabayar(){
         printf("\n\tMasukkan pilihan : ");
         while(input_pilihan_ppj=getchar() != '\n');
     }
-    
+
     if (input_pilihan_ppj==1){
         ppj = 0.05 * jumlah_bayar;
     }else if (input_pilihan_ppj==2){
@@ -2328,7 +2333,7 @@ void industri_prabayar(){
     printf("\tAlamat                    : %s", alamat);
     printf("\tNO Token                  : ");
     //membangkitkan bilangan random untuk token listrik
-    srand(time(NULL)); 
+    srand(time(NULL));
     for(int i=0; i<12; i++){ //looping sebanyak 12 kali
         token = rand() % 9 + 1; // *Scaling
         printf("%d", token);
@@ -2417,7 +2422,7 @@ void fasilitas_publik_prabayar(){
         printf("\n\tMasukkan pilihan : ");
         while(input_pilihan_ppj=getchar() != '\n');
     }
-    
+
     if (input_pilihan_ppj==1){
         ppj = 0.05 * jumlah_bayar;
     }else if (input_pilihan_ppj==2){
@@ -2429,7 +2434,7 @@ void fasilitas_publik_prabayar(){
     }
 
     float rumus_rekening_total;
-    
+
     close();
 
     // 6600 VA - 200.000 VA
@@ -2457,7 +2462,7 @@ void fasilitas_publik_prabayar(){
     printf("\tAlamat                    : %s", alamat);
     printf("\tNO Token                  : ");
     //membangkitkan bilangan random untuk token listrik
-    srand(time(NULL)); 
+    srand(time(NULL));
     for(int i=0; i<12; i++){ //looping sebanyak 12 kali
         token = rand() % 9 + 1; // *Scaling
         printf("%d", token);
@@ -2956,11 +2961,11 @@ void daya_awal_4400(){
     printf("\n\tMasukkan nama anda : ");
     fgets(nama, sizeof(nama), stdin);
     //scanf("%[^\n]", &nama);
-    
+
     printf("\n\tMasukkan NO REK ID Pelanggan : ");
     //scanf("%[^\n]", &id_pelanggan);
     fgets(id_pelanggan, sizeof(id_pelanggan), stdin);
-    
+
     printf("\n\tMasukkan alamat anda : ");
     fgets(alamat, sizeof(alamat), stdin);
     //scanf("%[^\n]", &alamat);
@@ -2990,6 +2995,7 @@ void daya_awal_4400(){
 }
 
 int main(){
+    namakelompok();
     login();
     logopln();
     pilih_fitur();
@@ -3023,7 +3029,7 @@ void cetak_rumah_tangga(char golongan[5] [10], float pilih_dayalistrik, char nam
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3065,7 +3071,7 @@ void cetak_bisnis(char golongan[2] [10], float pilih_dayalistrik, char nama[128]
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3116,7 +3122,7 @@ void cetak_industri(char golongan[2] [10], float pilih_dayalistrik, char nama[12
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3164,7 +3170,7 @@ void cetak_fasilitas_publik(char golongan[3] [10], float pilih_dayalistrik, char
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3217,7 +3223,7 @@ void cetak_rumah_tangga_prabayar(char golongan[5] [10], float pilih_dayalistrik,
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3242,7 +3248,7 @@ void cetak_rumah_tangga_prabayar(char golongan[5] [10], float pilih_dayalistrik,
         fprintf(fptr, "\tAlamat                    : %s", alamat);
         fprintf(fptr, "\tNO Token                  : ");
         //membangkitkan bilangan random untuk token listrik
-        srand(time(NULL)); 
+        srand(time(NULL));
         for(int i=0; i<12; i++){ //looping sebanyak 12 kali
             token = rand() % 9 + 1; // *Scaling
             fprintf(fptr, "%d", token);
@@ -3263,7 +3269,7 @@ void cetak_bisnis_prabayar(char golongan[2] [10], float pilih_dayalistrik, char 
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3288,7 +3294,7 @@ void cetak_bisnis_prabayar(char golongan[2] [10], float pilih_dayalistrik, char 
         fprintf(fptr, "\tAlamat                    : %s", alamat);
         fprintf(fptr, "\tNO Token                  : ");
         //membangkitkan bilangan random untuk token listrik
-        srand(time(NULL)); 
+        srand(time(NULL));
         for(int i=0; i<12; i++){ //looping sebanyak 12 kali
             token = rand() % 9 + 1; // *Scaling
             fprintf(fptr, "%d", token);
@@ -3309,7 +3315,7 @@ void cetak_industri_prabayar(char golongan[2] [10], float pilih_dayalistrik, cha
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3334,7 +3340,7 @@ void cetak_industri_prabayar(char golongan[2] [10], float pilih_dayalistrik, cha
         printf("\tAlamat                    : %s", alamat);
         printf("\tNO Token                  : ");
         //membangkitkan bilangan random untuk token listrik
-        srand(time(NULL)); 
+        srand(time(NULL));
         for(int i=0; i<12; i++){ //looping sebanyak 12 kali
             token = rand() % 9 + 1; // *Scaling
             printf("%d", token);
@@ -3355,7 +3361,7 @@ void cetak_fasilitas_publik_prabayar(char golongan[3] [10], float pilih_dayalist
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3380,7 +3386,7 @@ void cetak_fasilitas_publik_prabayar(char golongan[3] [10], float pilih_dayalist
         fprintf(fptr, "\tAlamat                    : %s", alamat);
         fprintf(fptr, "\tNO Token                  : ");
         //membangkitkan bilangan random untuk token listrik
-        srand(time(NULL)); 
+        srand(time(NULL));
         for(int i=0; i<12; i++){ //looping sebanyak 12 kali
             token = rand() % 9 + 1; // *Scaling
             fprintf(fptr, "%d", token);
@@ -3401,7 +3407,7 @@ void cetak_daya_awal_450(int daya_upgrade[6], int pilih_daya_upgrade, char nama[
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3439,7 +3445,7 @@ void cetak_daya_awal_900(int daya_upgrade[5], int pilih_daya_upgrade, char nama[
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3477,7 +3483,7 @@ void cetak_daya_awal_1300(int daya_upgrade[4], int pilih_daya_upgrade, char nama
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3515,7 +3521,7 @@ void cetak_daya_awal_2200(int daya_upgrade[3], int pilih_daya_upgrade, char nama
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3553,7 +3559,7 @@ void cetak_daya_awal_3500(int daya_upgrade[2], int pilih_daya_upgrade, char nama
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3591,7 +3597,7 @@ void cetak_daya_awal_4400(int daya_upgrade[1], int pilih_daya_upgrade, char nama
     // Membuat time realtime
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    
+
     //menulis file ke txt
      //membuat pointer
     FILE *fptr;
@@ -3720,5 +3726,28 @@ void lihat_tagihan_prabayar(){
 
     // tutup file
     fclose(fptr);
+    close();
+}
+
+void namakelompok(){
+    system("clear");
+    char buff[255];
+    FILE *fptr;
+
+    // membuka file
+    if ((fptr = fopen("nama-kelompok.txt","r")) == NULL){
+        printf("Error: File tidak ada!");
+        // Tutup program karena file gak ada.
+        exit(1);
+    }
+
+    // baca isi file dengan gets lalu simpan ke buff
+    while(fgets(buff, sizeof(buff), fptr)){
+        printf("%s", buff);
+    }
+
+    // tutup file
+    fclose(fptr);
+
     close();
 }
